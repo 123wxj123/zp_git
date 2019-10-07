@@ -1,0 +1,340 @@
+ <style>
+	table{
+		margin-top: 10px;
+		font-size: 16px;
+		border: 1px solid #ccc;
+	}
+	tr,td{
+	height: 45px;
+	line-height: 35px;
+	text-align: center;
+	}
+	.btn{
+	height: 40px;
+	font-size: 16px;
+	margin-top: 20px;
+	margin-right: 10px;
+}
+form.only div:nth-child(1){
+	display: none;
+}
+</style>
+<div id="waiter" class="wrapper">
+	<button id="btn_add_waiter" type="button" class="btn btn-primary">添加员工</button>
+	<!-- <button id="btn_search" type="button" class="btn btn-primary">查询</button> -->
+	<button id="btn_barch_waiter_dels" type="button" class="btn btn-danger">批量删除</button>
+	<table class="table table-hover table-light" id="waiter_tbl">
+		  <thead class="thead-light">
+		    <tr>
+		      <!-- <th scope="col">ID号</th> -->
+		      <th scope="col">编号</th>
+		      <th scope="col">电话</th>
+		      <th scope="col">密码</th> 
+		      <th scope="col">姓名</th>
+		      <th scope="col">id卡</th>
+		      <th scope="col">状态</th>
+		      <th scope="col">照片</th>
+		      <th scope="col">操作</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  </tbody>
+	</table>
+	<!-- 添加员工模态框开始 -->
+	<div class="modal fade" id="addWaiterModal" tabindex="-1">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="addLabel">请输入要添加/修改的信息</h5>
+	        <button type="button" class="close" onclick="closeAddWaiterModal()">
+	          <span>&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <!-- 表单开始 -->
+			<form class="only" id="waiter_form">
+				<!-- 编码开始 -->
+				<div class="row form-group">
+					<label class="col-2 text-right" for="input_id">编码</label>
+					<div class="col">
+						<input class="form-control" type="text" name="id" id="input_id">
+					</div>
+				</div>
+				<!-- 编码结束 -->
+				<!-- 手机开始 -->
+				<div class="row form-group">
+					<label class="col-2 text-right" for="input_telephone">电话</label>
+					<div class="col">
+						<input class="form-control" type="text" name="telephone" id="input_telephne" placeholder="enter your phone number">
+					</div>
+				</div>
+				<!-- 手机结束 -->
+				<!-- 密码开始 -->
+				<div class="row form-group">
+					<label class="col-2 text-right" for="input_password">密码</label>
+					<div class="col">
+						<input type="password" class="form-control" id="input_password" name="password" placeholder="password">
+					</div>
+				</div>
+				<!-- 密码结束 -->
+				<!-- 用户名表单开始 -->
+				<div class="row form-group">
+					<label class="col-2 text-right" for="input_realname">姓名</label>
+					<div class="col">
+						<input class="form-control" type="text" id="input_realname" name="realname" placeholder="realname">
+					</div> 
+				</div>
+				<!-- 用户名表单结束 -->
+				<!-- id卡开始 -->
+				<div class="row form-group">
+					<label class="col-2 text-right" for="input_idcard">ID卡</label>
+					<div class="col">
+						<input type="text" class="form-control" id="input_idcard" name="idcard" placeholder="idcard">
+					</div>
+				</div>
+				<!-- id卡结束 -->
+				<!-- 状态开始 -->
+				<div class="row form-group">
+					<label class="col-2 text-right" for="input_status">状态</label>
+					<div class="col">
+						<input class="form-control" type="text" id="input_status" name="status" placeholder="status">
+					</div> 
+				</div>
+				<!-- 状态结束结束 -->
+				<!-- 图片开始 -->
+				<div class="row form-group">
+					<label class="col-2 text-right" for="input_photo">图片</label>
+					<div class="col">
+						<input class="form-control" type="text" id="input_photo" name="photo" placeholder="photo">
+					</div> 
+				</div>
+				<!-- 图片结束 -->
+			
+			</form>
+			<!-- 表单结束 -->
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" onclick="closeAddWaiterModal()">取消</button>
+	        <button id="btn_certainAddCustomer" type="button" class="btn btn-primary" onclick="certainAddWaiterModal()">确定</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>		 
+	<!-- 添加员工模态框结束  -->
+	<!-- 删除员工成功提示框开始 -->
+	<div class="toast toast_del" style="position: absolute;top: 1em;right: 1em">
+	  <div class="toast-header">
+	    <i class="iconfont icon-duigou text-success mr-5"></i>
+	    <strong class="mr-auto">success</strong>
+	    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+	      <span>&times;</span>
+	    </button>
+	  </div>
+	  <div class="toast-body"></div> 
+	</div>
+	<!-- 删除员工成功提示框结束 -->
+	<!-- 添加成功提示开始 -->
+	<div class="toast toast_add" style="position: absolute;top: 1em;right: 1em">
+	  <div class="toast-header">
+	    <i class="iconfont icon-duigou text-success mr-5"></i>
+	    <strong class="mr-auto">success</strong>
+	    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+	      <span>&times;</span>
+	    </button>
+	   </div>
+	  <div class="toast-body"></div> 
+	</div>
+	<!-- 添加成功提示结束 -->
+
+</div>
+<script>
+	//var baseURL = "http://134.175.154.93:6677";
+	var baseURL = "http://134.175.100.63:6677";
+	//重载数据
+	function reloadData(){
+		// var url = baseURL+"/waiter/findAllWaiter";
+		var url = baseURL+"/waiter/findAll";
+		$.get(url,function(response,status){
+			$("#waiter_tbl tbody").empty();
+			response.data.forEach(function(item){
+				var newTr = $(`
+					<tr>
+					<td><input type = "checkbox" value = "`+item.id+`"></td>
+					<td>`+item.telephone+`</td>
+					<td>`+item.password+`</td>
+					<td>`+item.realname+`</td>
+					<td>`+item.idcard+`</td>
+					<td>`+item.status+`</td>
+					<td>`+item.photo+`</td>
+					<td>
+					<a class="btn_del" href="javascript:void(0)">
+						<span class="btn_del fa fa-trash text-danger"></span>
+						</a>
+						<a class="btn_upd" href="javascript:void(0)">
+						<span class="btn_upd fa fa-edit text-primary ml-3"></span>
+						</a>
+					</td>
+					</tr>`);
+				$("#waiter_tbl").append(newTr);
+			});
+		});
+	}
+	//关闭添加员工模态框
+	function closeAddWaiterModal(){
+		$("#addWaiterModal").modal("hide");
+	}
+	function certainAddWaiterModal(){
+		$("#addWaiterModal").modal("hide");
+	}
+	//查询
+	function closesearchModal(){
+		$("#searchModal").modal("hide");
+	}
+	function certainsearchModal(){
+		$("#searchModal").modal("hide");
+	}
+	function toast_add(msg){
+		$(".toast_add .toast-body").text(msg);
+		$(".toast_add").toast("show")
+	}
+	//为提交按钮绑定事件
+	function certainAddWaiterModal(){
+		//获取数据
+		var id = $("#waiter_form input[name=id]").val();
+		var telephone= $("#waiter_form input[name=telephone]").val();
+		var password = $("#waiter_form input[name=password]").val();
+		var realname = $("#waiter_form input[name=realname]").val();
+		var idcard = $("#waiter_form input[name=idcard]").val();
+		var status = $("#waiter_form input[name=status]").val();
+		var photo = $("#waiter_form input[name=photo]").val();
+		//和后台交互
+		// var url = baseURL+"/waiter/updateWaite";
+		var url = baseURL+"/waiter/saveOrUpdate";
+		var data = {
+			id:id,
+			telephone:telephone,
+			password:password,
+			realname:realname,
+			idcard:idcard,
+			status:status,
+			photo:photo
+		}
+		console.log(data);
+		$.post(url,data,function(result){
+			if(result.status===200){
+				//关闭模态框
+				closeAddWaiterModal();
+				reloadData();
+				toast_add("添加或修改成功");
+			}else {
+				alert(result.message);
+			}
+		})
+	}
+	$(function(){
+		//初始话删除成功提示框
+		$(".toast_del").toast({
+			delay:3000
+		});
+		//初始话添加或修改成功提示框
+		$(".toast_add").toast({
+			delay:3000
+		});
+		reloadData();
+		//为添加按钮绑定事件
+		$("#btn_add_waiter").on("click",function(event){
+			//显示添加员工模态框
+			$("#addWaiterModal").modal("show");
+			//刷新页面后会自动清空数据
+			$("#waiter_form input[name=id]").val("");
+			$("#waiter_form input[name=telephone]").val("");
+			$("#waiter_form input[name=password]").val("");
+			$("#waiter_form input[name=realname]").val("");
+			$("#waiter_form input[name=idcard]").val("");
+			$("#waiter_form input[name=status]").val("");
+			$("#waiter_form input[name=photo]").val("");
+		})
+		//为查
+		$("#btn_search").on("click",function(){
+			// alert(1);
+			$("#searchModal").modal("show");
+		});
+		//为删除按钮绑定事件
+		//利用事件代理
+		$("#waiter_tbl").on("click","a",function(){
+			switch(this.className){
+				case "btn_del":
+					//获取数据
+					var id = $(this).parents("tr").children().find("input").val();
+
+					//和后台交互
+					// var url = baseURL+"/waiter/deleteWaiterById";
+					var url = baseURL+"/waiter/deleteById";
+					var data = "id="+id;
+					$.get(url,data,function(result){
+						if(result.status===200){
+							//显示成功提示框
+							toast_del("删除成功");
+							reloadData();
+						}else{
+							alert(result.message);
+						}
+					})
+					break;
+				case "btn_upd":
+					$("#addWaiterModal").modal("show");
+					//获取值
+					var id = $(this).parents("tr").children().eq(0).find("input").val();
+					var telephone = $(this).parents("tr").children().eq(1).text();
+					var password = $(this).parents("tr").children().eq(2).text();
+					var realname = $(this).parents("tr").children().eq(3).text();
+					var idcard = $(this).parents("tr").children().eq(4).text();
+					var status = $(this).parents("tr").children().eq(5).text();
+					var photo = $(this).parents("tr").children().eq(6).text(); 
+					//设置值
+					$("#waiter_form input[name=id]").val(id);
+					$("#waiter_form input[name=telephone]").val(telephone);
+					$("#waiter_form input[name=password]").val(password);
+					$("#waiter_form input[name=realname]").val(realname);
+					$("#waiter_form input[name=telephone]").val(telephone);
+					$("#waiter_form input[name=idcard]").val(idcard);
+					$("#waiter_form input[name=status]").val(status);
+					$("#waiter_form input[name=photo]").val(photo);
+					break;
+			}
+		});
+		//为批量删除绑定事件
+		$("#btn_barch_waiter_dels").on("click",function(){
+		//alert(1);
+		var ids = $("#waiter_tbl input:checkbox").filter(":checked").map(function(index,item){
+			return $(item).val();
+		}).toArray();
+		//和后台交互
+		var data="";
+		for(var key in ids){
+			var id = ids[key];
+			if(key==0){
+				data+="ids="+id
+			}else{
+				data+="&ids="+id
+				console.log(data);
+			}
+		}
+		$.ajax({
+			// url:baseURL+"/waiter/batchDeleteWaiter",
+			url:baseURL+"/waiter/batchDelete",
+			method:"POST",
+			data:data,
+			success:function(result){
+				if(result.status===200){
+					toast_del("批量删除员工成功");
+					reloadData();
+				}else{
+					alert(result.message);
+					}
+				}
+			});
+		});
+
+	});
+</script>

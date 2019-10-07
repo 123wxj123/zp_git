@@ -1,0 +1,304 @@
+<style>
+	table{
+		margin-top: 10px;
+		font-size: 16px;
+		border: 1px solid #ccc;
+	}
+	th,td{
+		height: 45px;
+		line-height: 35px;
+		}
+	.btn{
+		height: 40px;
+		font-size: 16px;
+		margin-top: 20px;
+		margin-right: 10px;
+	}
+</style>
+<button id="btn_add_order" type="button" class="btn btn-primary">录入订单</button>
+<!-- <button type="button" class="btn btn-primary">批量导入</button> -->
+<button id="btn_barch_dels" type="button" class="btn btn-danger">批量删除</button>
+<table id = "order_tbl" class="table table-hover table-light">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">编号</th>
+      <th scope="col">服务数量</th>
+      <th scope="col">产品地址</th> 
+      <th scope="col">订单地址</th>
+      <th scope="col">顾客id</th>
+      <th scope="col">地址id</th>
+      <th scope="col">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+<!-- 模态框开始-->
+<div class="modal fade" id="orderModal" tabindex="-1">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">请输入要添加/修改的信息</h5>
+        <button type="button" class="close" onclick="closeOrderModal()">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+  		<!-- 表单开始 -->
+		<form action="/register" id="order_form">
+			<!-- 数量开始 -->
+			<div class="form-group row">
+				<label for="input_number" class="col-2 text-right">数量</label>
+				<div class="col-10" >
+					<input id="input_number" name="number" type="text" class="form-control" placeholder="number">
+				</div>
+			</div>
+			<!-- / 数量结束 -->
+			<!-- 服务地址开始 -->
+			<div class="form-group row">
+				<label for="input_productId" class="col-2 text-right">产品地址</label>
+				<div class="col-10" >
+					<input id="input_productId" name="productId" type="text" class="form-control">
+				</div>
+			</div>
+			<!-- / 服务地址结束 -->
+			<!-- 底单地址开始-->
+			<div class="form-group row">
+				<label for="input_orderId" class="col-2 text-right">订单地址</label>
+				<div class="col-10" >
+					<input id="input_orderId" name="orderId" type="text" class="form-control">
+				</div>
+			</div>
+			<!-- / 订单地址结束 -->
+			<!-- 顾客id开始-->
+			<div class="form-group row">
+				<label for="input_customerId" class="col-2 text-right">顾客id</label>
+				<div class="col-10" >
+					<input id="input_customerId" name="customerId" type="text" class="form-control">
+				</div>
+			</div>
+			<!-- / 顾客id结束 -->
+			<!-- 地址id开始-->
+			<div class="form-group row">
+				<label for="input_addressId" class="col-2 text-right">地址id</label>
+				<div class="col-10" >
+					<input id="input_addressId" name="addressId" type="text" class="form-control">
+				</div>
+			</div>
+			<!-- / 地址id结束 -->
+		</form>
+		<!-- / 表单结束 -->     
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeOrderModal()">取消</button>
+        <button type="button" class="btn btn-primary" onclick="submitOrder()">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- / 模态框结束 -->
+<!-- 提示框 -->
+<div class="toast toast_del" style="position: absolute;top: 1em;right: 1em">
+  <div class="toast-header">
+    <i class="iconfont icon-duigou text-success mr-5"></i>
+    <strong class="mr-auto">success</strong>
+    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+      <span>&times;</span>
+    </button>
+  </div>
+  <div class="toast-body"></div> 
+</div>
+<!-- 提示框结束-->
+<!-- 提示框 -->
+<div class="toast toast_add" style="position: absolute;top: 1em;right: 1em">
+  <div class="toast-header">
+    <i class="iconfont icon-duigou text-success mr-5"></i>
+    <strong class="mr-auto">success</strong>
+    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+      <span>&times;</span>
+    </button>
+  </div>
+  <div class="toast-body"></div> 
+</div>
+<!-- 提示框结束-->
+<script>
+	var baseURL = "http://134.175.100.63:6677";
+	//var baseURL = "http://134.175.154.93:6677";
+ 	function reloadData(){
+ 	 	// var url = baseURL+"/orderLine/findAllOrderLine";
+ 	 	var url = baseURL+"/order/findAll";
+ 	 	$.get(url,function(response,status){
+ 	 		
+ 	 	$("#order_tbl tbody").empty();	
+ 	 	response.data.forEach(function(item){
+ 	 		var newTr = $(`
+ 	 			<tr>
+					<td><input type="checkbox" value="`+item.id+`"></td>
+					<td>`+item.number+`</td>
+					<td>`+item.productId+`</td>
+					<td>`+item.orderId+`</td>
+					<td>`+item.customerId+`</td>
+					<td>`+item.addressId+`</td>
+					<td>
+						<a class="btn_del" href="javascript:void(0)">
+						<span class="btn_del fa fa-trash text-danger mr-3"></sapn>
+						</a>
+						<a class="btn_upd" href="javascript:void(0)">
+						<sapn class="btn_upd fa fa-edit text-primary mr-3"></sapn>
+						</a>
+						<a class="btn_details" href="javascript:void(0)">
+						<span class="fa fa-file-alt text-primary mr-3"></span>
+						</a>
+					</td>
+				</tr>
+ 	 			`);
+				$("#order_tbl").append(newTr)
+
+ 	 	    });
+ 	    });
+ 	}
+ 	function closeOrderModal(){
+		$("#orderModal").modal("hide");
+		}
+ 	// 弹出提示框
+	function toast_del(msg){
+		$(".toast_del .toast-body").text(msg);
+		$(".toast_del").toast("show")
+	}
+	function toast_add(msg){
+		$(".toast_add .toast-body").text(msg);
+		$(".toast_add").toast("show")
+	}
+	// 提交表单
+	function submitOrder(){
+		// 1. 获取参数
+		var id = $("#order_form input[name=id]").val();
+		var number = $("#order_form input[name=number]").val();
+		var productId = $("#order_formm input[name=productId]").val();
+		var orderId = $("#order_formm input[name=orderId]").val();
+		var customerId = $("#order_formm input[name=customerId]").val();
+		var addressId = $("#order_formm input[name=addressId]").val();
+		// 参数校验
+		// 2. 调用后台接口保存
+		// var url = baseURL+"/orderLine/insertOrderLine"
+		var url = baseURL+"/order/save";
+		var data = {
+			// orderLines[0].id:orderLines[0].id,
+			id:id,
+			number:number,
+			productId:productId,
+			orderId:orderId,
+			customerId:customerId,
+			addressId:addressId
+		}
+		console.log(data);
+		$.post(url,data,function(result){
+			if(result.status === 200){
+				// 3. 关闭模态
+				closeOrderModal();
+				// 4. 刷新数据
+				reloadData()
+				// 5. 提示录入成功
+				toast_add("提交订单成功");
+			} else {
+				alert("接口异常！");
+			}
+		});
+		event.preventDefault();
+	}
+ 	$(function(){
+ 		// $(".toast").toast({
+ 		// 	delay:2000
+ 		// })
+ 		$(".toast_del").toast({
+			delay:2000
+		});
+		$(".toast_add").toast({
+			delay:2000
+		});
+		reloadData();
+		// 为按钮绑定事件
+		$("#btn_add_order").click(function(){
+			//显示模态框
+			$("#orderModal").modal("show");
+			$("#order_form input[name=id]").val("");
+			$("#order_form input[name=number]").val("");
+			$("#order_form input[name=productId]").val("");
+			$("#order_form input[name=orderId]").val("");
+			$("#order_form input[name=customerId]").val("");
+			$("#order_form input[name=addressId]").val("");
+		});
+		//为删除和添加绑定事件
+		$("#order_tbl").on("click","a",function(event){
+			//alert(1);
+			switch(this.className){
+				case "btn_del":
+					//获取数据
+					var id = $(this).parents("tr").children().eq(0).find("input").val();
+					// alert(id);
+					// var url = baseURL+"/orderLine/deleteOrderLineById";
+					var url = baseURL+"/order/deleteById";
+					var data = "id="+id; 
+					$.get(url,data,function(response,status){
+						// alert(response.message);
+						reloadData();
+						toast_del("删除成功");
+					});
+					break;
+				case "btn_upd":
+					//alert(2);
+					$("#orderModal").modal("show");
+					var id = $(this).parents("tr").children().eq(0).find("input").val();
+					var number= $(this).parents("tr").children().eq(1).text();
+					var productId = $(this).parents("tr").children().eq(2).text();
+					var orderId = $(this).parents("tr").children().eq(3).text();
+					var customerId = $(this).parents("tr").children().eq(4).text();
+					var addressId = $(this).parents("tr").children().eq(3).text();
+					//设置值
+					$("#order_form input[name=id]").val(id);
+					$("#order_from input[name=number]").val(number);
+					$("#order_form input[name=productId]").val(productId);
+					$("#order_form input[name=orderId]").val(orderId);
+					$("#order_form input[name=customerId]").val(customerId);
+					$("#order_form input[name=addressId]").val(addressId);
+					break;
+				}
+		});
+		//为批量删除绑定事件
+		$("#btn_barch_dels").on("click",function(){
+			//alert(3);
+			var ids = $("#order_tbl input:checkbox").filter(":checked").map(function(index,item){
+				return $(item).val();
+			}).toArray();
+			console.log("ids",ids);
+			var data = "";
+			for(var key in ids){
+				var id = ids[key];
+				if(key == 0){
+					data+="ids="+id
+					console.log(data);
+				}else{
+					data+="&ids="+id
+				}
+			}
+			// var url=baseURL+"/orderLine/batchDeleteOrderLine";
+			var url=baseURL+"/order/batchDelete";
+			$.ajax({
+				url:url,
+				method:"post",
+				data:data,
+				success:function(result){
+					console.log(result);
+					if(result.status === 200){
+						toast_del("批量删除成功");
+						reloadData();
+					}else {
+						alert(result.message);
+					}
+				}
+			});
+		});
+	});
+</script>
+ 

@@ -1,0 +1,338 @@
+
+<link rel="stylesheet" href="./css/customer.css">
+<style>
+	table{
+		margin-top: 10px;
+		font-size: 16px;
+		border: 1px solid #ccc;
+	}
+	tr,td{
+
+	height: 45px;
+	line-height: 35px;
+
+}
+.btn{
+	height: 40px;
+	font-size: 16px;
+	margin-top: 20px;
+	margin-right: 10px;
+}
+form.only div:nth-child(1){
+	display: none;
+}
+</style>
+<div id="customer">
+	<!-- <div>顾客管理</div> -->
+	<div class="col bg-light ml-auto right">
+		<button id="btn_addCustomer" type="button" class="btn btn_add btn-primary  btn-sm">添加顾客</button>
+		<!-- <button type="button" class="btn btn_import btn-primary btn-sm">批量导入</button> -->
+		<button id = "btn_battch" type="button" class="btn btn_battch btn-danger btn-sm">批量删除</button>
+		<table class="table table-hover table-light" id="customer_ble">
+		  <thead class="thead-light">
+		    <tr>
+		      <!-- <th scope="col">ID号</th> -->
+		      <th width="100px">ID号</th>
+		      <th width="300px">电话</th>
+		      <th width="200px">密码</th>
+		      <th width="200px">姓名</th>
+		      <th width="200px">状态</th>
+		      <th width="300px">照片</th>
+		      <th width="300px">操作</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  </tbody>
+		</table>
+	</div>
+	<!-- 添加顾客模态框开始 -->
+	<div class="modal fade" id="addCustomerModal" tabindex="-1">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="addLabel">请输入/修改顾客信息</h5>
+	        <button type="button" class="close" onclick="closeAddCustomerModal()">
+	          <span>&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <!-- 表单开始 -->
+			<form class="only" id="customer_form">
+				<!-- id表单开始 -->
+				<div class="row form-group">
+					<label class="col-2 text-right" for="input_id">编号</label>
+					<div class="col">
+						<input class="form-control" type="text" id="input_id" name="id">
+					</div> 
+				</div>
+				<!-- id表单结束 -->
+				<!-- 用户名表单开始 -->
+				<div class="row form-group">
+					<label class="col-2 text-right" for="input_realname">姓名</label>
+					<div class="col">
+						<input class="form-control" type="text" id="input_realname" name="realname" placeholder="realname">
+					</div> 
+				</div>
+				<!-- 用户名表单结束 -->
+				<!-- 密码开始 -->
+				<div class="row form-group">
+					<label class="col-2 text-right" for="input_password">密码</label>
+					<div class="col">
+						<input type="password" class="form-control" id="input_password" name="password" placeholder="Password">
+					</div>
+				</div>
+				<!-- 密码结束 -->
+				<!-- 手机开始 -->
+				<div class="row form-group">
+					<label class="col-2 text-right" for="input_telephone">电话</label>
+					<div class="col">
+						<input class="form-control" type="text" name="telephone" id="input_telephne" placeholder="enter your phone number">
+					</div>
+				</div>
+				<!-- 手机结束 -->
+				<!-- 状态开始 -->
+				<div class="row form-group">
+					<label class="col-2 text-right" for="input_status">状态</label>
+					<div class="col">
+						<input class="form-control" type="text" name="status" id="input_status" placeholder="status">
+					</div>
+				</div>
+				<!-- 状态结束 -->
+				<!-- 状态开始 -->
+				<div class="row form-group">
+					<label class="col-2 text-right" for="input_photo">照片</label>
+					<div class="col">
+						<input class="form-control" type="text" name="photo" id="input_photo" placeholder="photo">
+					</div>
+				</div>
+				<!-- 状态结束 -->
+			</form>
+			<!-- 表单结束 -->
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" onclick="closeAddCustomerModal()">取消</button>
+	        <button id="btn_certainAddCustomer" type="button" class="btn btn-primary" onclick="certainAddCustomerModal()">确定</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>		 
+	<!-- 添加顾客模态框结束  -->
+	<!-- 添加顾客确定提示框开始 -->
+	<div class="toast toast_addCustomer" style="position:absolute;top:1em;right:1em">
+	  <div class="toast-header">
+   		<i class="fa fa-bell text-success mr-2"></i>
+	    <strong class="mr-auto">success!!</strong>
+	    <!-- <small>11 mins ago</small> -->
+	    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+	      <span>&times;</span>
+	    </button>
+	  </div>
+	  <div class="toast-body">
+	     用户添加成功
+	  </div>
+	</div>
+	<!-- 添加顾客确定提示框结束 -->
+	<!-- 提示框开始 -->
+	<div class="toast toast_del" style="position: absolute;top: 1em;right: 1em">
+	  <div class="toast-header">
+	    <i class="iconfont icon-duigou text-success mr-5"></i>
+	    <strong class="mr-auto">success</strong>
+	    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+	      <span>&times;</span>
+	    </button>
+	  </div>
+	  <div class="toast-body"></div> 
+	</div>
+	<!-- 提示款结束 -->
+</div>
+<script>
+	var baseURL = "http://134.175.100.63:6677";
+	//var baseURL = "http://134.175.154.93:6677";
+	//加载数据
+	// var url = baseURL+"/customer/findCustomerAll";
+	var url = baseURL+"/customer/findAll";
+	function reloadData(){
+		$.get(url,function(response,status){
+			$("#customer_ble tbody").empty();
+			response.data.forEach(function(item){
+				var newTr = $(`
+				<tr>
+			      <th scope="row">
+			      	<input type="checkbox" value="`+item.id+`"/>
+			      </th>
+			      	<td>`+item.telephone+`</td>
+			        <td>`+item.password+`</td>
+			        <td>`+item.realname+`</td>
+			        <td>`+item.status+`</td>
+			        <td>`+item.photo+`</td>
+			        <td>
+					<a class="btn_del" href="javascript:void(0)">
+						<span class="btn_del fa fa-trash text-danger"></span>
+					</a>
+					<a class="btn_upd" href="javascript:void(0)">
+						<span class="btn_upd fa fa-edit text-primary ml-3"></span>
+					</a>
+				    </td>
+			    </tr>
+					`);
+				$("#customer_ble").append(newTr);
+			});
+		});
+	}
+	function closeAddCustomerModal(){
+		//隐藏添加模态框
+		$("#addCustomerModal").modal("hide");
+	}
+	//提交表单
+	// function certainAddCustomerModal(){
+	// 	$("#addCustomerModal").modal("hide");
+	// }
+	//弹出提示框
+	function toast_addCustomer(msg){
+		$(".toast_addCustomer .toast-body").text(msg);
+		$(".toast_addCustomer").toast("show");
+	}
+	function toast_del(msg){
+		$(".toast_del .toast-body").text(msg);
+		$(".toast_del").toast("show")
+	}
+	//提交表单
+	function certainAddCustomerModal(){
+		//1.获取参数
+		var id = $("#customer_form input[name=id]").val();
+		var realname = $("#customer_form input[name=realname]").val();
+		var password = $("#customer_form input[name=password]").val();
+		//因为是一个jquery对象.所以调用jquery方法val()
+		var telephone = $("#customer_form input[name=telephone]").val();
+		var status = $("#customer_form input[name=status]").val();
+		var photo = $("#customer_form input[name=photo]").val();
+
+		//参数提交
+		//2.调用后台接口保存数据
+		// var url = baseURL+"/customer/saveCustomerOrUpdateCustomer";
+		var url = baseURL+"/customer/saveOrUpdate";
+		var data= {
+			id:id,
+			realname:realname,
+			password:password,
+			telephone:telephone,
+			status:status,
+			photo:photo
+		}
+		$.post(url,data,function(result){
+			if(result.status === 200){
+				//3.关闭莫泰框
+				closeAddCustomerModal();
+				//4.刷新数据
+				reloadData();
+				//5.提示录入成功
+				toast_addCustomer();
+			} else {
+				alert(result.message);
+			}
+		});
+		// event.parentDefault();
+	}
+	//文档加载后执行
+	$(function(){
+		$(".toast_del").toast({
+			delay:2000
+		})
+		reloadData();
+		//为添加按钮绑定事件
+		$("#btn_addCustomer").on("click",function(){
+			//显示添加模态框
+			$("#addCustomerModal").modal("show");
+			//刷新页面后会自动清空数据
+			$("#customer_form input[name=id]").val("");
+			$("#customer_form input[name=realname]").val("");
+			$("#customer_form input[name=password]").val("");
+			$("#customer_form input[name=telephone]").val("");
+			$("#customer_form input[name=telephone]").val("");
+			$("#customer_form input[name=status]").val("");
+			$("#customer_form input[name=photo]").val("");
+		});
+		//初始化添加用户提示框
+	 	$(".toast_addCustomer").toast({
+	 		autohide:true,
+	 		delay:2000
+	 	});
+	 	//正常调用
+	 	$("#btn_certainAddCustomer").on("click",function(){
+	 		$(".toast_addCustomer").toast("show");
+	 		// $(".toast").toast("show");
+	 	})
+
+	 	//为删除绑定事件
+	 	$("#customer_ble").on("click","a",function(event){
+	 		 switch(this.className){
+	 		 	case "btn_del":
+					var id = $(this).parents("tr").children().eq(0).find("input").val();
+					// var url = baseURL +"/customer/deleteCustomerById"
+					var url = baseURL +"/customer/deleteById"
+					var data = "id="+id;
+					$.get(url,data,function(response,status){
+						toast_del("删除成功");
+						reloadData();
+					});
+					break;
+				case "btn_upd":
+					//弹出模态框
+					$("#addCustomerModal").modal("show");
+					//获取值
+					var id = $(this).parents("tr").children().eq(0).find("input").val();
+
+					var realname = $(this).parents("tr").children().eq(3).text();
+					var password = $(this).parents("tr").children().eq(2).text();
+					var telephone = $(this).parents("tr").children().eq(1).text();
+					var status = $(this).parents("tr").children().eq(4).text();
+					var photo = $(this).parents("tr").children().eq(5).text();
+
+					//设置值
+					$("#customer_form input[name=id]").val(id);
+					$("#customer_form input[name=realname]").val(realname);
+					$("#customer_form input[name=password]").val(password);
+					$("#customer_form input[name=telephone]").val(telephone);
+					$("#customer_form input[name=status]").val(status);
+					$("#customer_form input[name=photo]").val(photo);
+					break;
+	 		 }
+	 	});
+	 	//为批量删除按钮绑定事件
+	 	$("#btn_battch").on("click",function(){
+	 		// alert(2);
+	 		//获取数据
+	 		var ids = $("#customer_ble input:checkbox").filter(":checked").map(function(index,item){
+				return $(item).val();
+			}).toArray();
+	 		console.log("ids",ids);
+	 		var data ="";
+		for(var key in ids){
+			var id = ids[key];
+			if(key==0){
+				data+="ids="+id
+			} else {
+				data+="&ids="+id
+				}
+			}
+	 		$.ajax({
+	 			// url:baseURL+"/customer/batchDeleteCustomer",
+	 			url:baseURL+"/customer/batchDelete",
+				method:"post",
+				data:data,
+				success:function(result){
+					console.log(result);
+					if(result.status === 200){
+						// alert("批量删除成功");
+						// 更新页面
+						reloadData();
+						toast_del("批量删除成功");
+					} else {
+						alert(result.message);
+					}
+				}
+			})
+	 	})
+	});
+</script>
+

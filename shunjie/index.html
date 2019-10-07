@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>顺捷家政服务</title>
+	<link rel="stylesheet" href="./css/style.css">
+	<link rel="stylesheet" href="./css/common.css">
+
+	<!-- <link rel="stylesheet" href="./css/houtai.css"> -->
+	<link rel="stylesheet" href="http://at.alicdn.com/t/font_1329399_7eixj5hanx8.css">
+	<script src="https://cdn.bootcss.com/moment.js/2.24.0/moment.min.js"></script>
+
+	<!-- <link rel="stylesheet" href="http://at.alicdn.com/t/font_1394774_mjkkz5pz0we.css"> -->
+
+	<link href="https://cdn.bootcss.com/font-awesome/5.10.2/css/all.css" rel="stylesheet">
+	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+	<script type="text/javascript" src="./js/index.js"></script>
+	<link rel="stylesheet" href="./bootstrap/css/bootstrap.css">
+	<script type="text/javascript" src="./js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="./bootstrap/js/bootstrap.js"></script>
+	 
+</head>
+<body>
+	<script>
+	function closeRegisterModal(){
+			$("#registerModal").modal("hide");
+	}
+	function closeLoginModal(){
+			$("#loginModal").modal("hide");
+	}
+	function certainLoginModal(){
+		$("#loginModal").modal("hide");
+	}
+	function certainRegisterModal(){
+		$("#registerModal").modal("hide");
+	}
+	$(function(){
+		// reloadData();
+		$("#header_register").on("click",function(){
+			//显示注册模态框
+			$("#registerModal").modal("show");
+		});
+		$("#header_login").on("click",function(){
+			//显示注册模态框
+			$("#loginModal").modal("show");
+		});
+		//初始化关闭登录成功提示框
+		$(".toast_login").toast({
+			autohide:true,
+			delay:2000
+		});
+		//正常调用
+		$("#login_certain").on("click",function(){
+			//alert(1);
+			$(".toast_login").toast("show");
+		})
+		//初始化关闭注册成功提示框
+		$(".toast_register").toast({
+			autohide:true,
+			delay:2000
+		});
+		//正常调用
+		$("#register_certain").on("click",function(){
+			//alert(1);
+			$(".toast_register").toast("show");
+		})
+		//给一级菜单nav_one绑定事件，控制二级菜单的show and hide
+		$(".nav_one >li > a").on("click",function(){
+			$(this).parent().siblings().find(".nav_two").collapse("hide");
+			$(this).next("ul.nav_two").collapse("toggle");
+		});
+	});
+	</script>
+	<div class="container-fluid">
+		<div class="row" id="top">
+			<div class="col-10 header">
+			<i class="iconfont icon-shiwaiqingjie"></i>
+			顺 捷 家 政 服 务 平 台</div>
+			<div class="col logo">
+				 <div class="row">
+				 	<div class="col-4">
+				 		<div class="row">
+				 			<div class="col-4">
+				 				<i class="iconfont icon-denglu"></i>
+				 				<!-- <i class="fa fa-edit"></i> -->
+				 			</div>
+				 			<div class="col-8">
+				 				<a class="text-white" href="javascript:void(0)" id="header_login">登录</a>
+				 			</div>
+				 		</div>
+				 	</div>
+				 	<div class="col-4">
+				 		<div class="row">
+				 			<div class="col-4">
+				 				<i class="fa fa-edit"></i>
+				 			</div>
+				 			<div class="col-8">
+				 				<a class="text-white" href="javascript:void(0)" id="header_register">注册</a>
+				 			</div>
+				 		</div>
+				 	</div>
+				 	<div class="col-4">
+				 		<div class="row">
+				 			<div class="col-4">
+				 				<i class="iconfont icon-fanhui"></i>
+				 				<!-- <i class="fa fa-edit"></i> -->
+				 			</div>
+				 			<div class="col-8">
+				 				<a class="text-white" href="javascript:void(0)" id="header_back">返回</a>
+				 			</div>
+				 		</div>
+				 	</div>
+				 </div>
+			</div>
+		</div>
+		<div class="row content" >
+			<div class="col-2 left-nav shadow-lg">
+				<ul class="row nav flex-column nav_one" id="nav">
+					<!-- <li class="nav-item">
+					    <a class="row col nav-link text-white" href="javascript:void(0)">
+					    栏目列表</a>
+					</li> -->
+					<!-- <li id="first" url="./pages/customer.html">
+					    <div class="row nav-link" href="javascript:void(0)">
+					    <span class="iconfont icon-lliebiao"></span>
+					    栏目列表</div>
+					</li> -->
+					<li id="first" url="./pages/customer.html">
+					    <a class="nav-link" href="javascript:void(0)">
+					    <span class="iconfont icon-gerenzhongxin-zhong"></span>
+					     &nbsp;顾客管理</a>
+					   <!--  <ul class="text-white nav_two collapse">
+							<li><a href="javascript:void(0)">顾客详情</a></li>
+							<li><a href="javascript:void(0)">顾客设置</a></li>
+						</ul> -->
+					</li>
+					<li url="./pages/waiter.html">
+					    <a class="row nav-link" href="javascript:void(0)">
+					    <span class="iconfont icon-denglu"></span>
+					    &nbsp;员工管理</a>
+						<!-- <ul class="text-white nav_two collapse">
+							<li><a href="javascript:void(0)">员工详情</a></li>
+							<li><a href="javascript:void(0)">员工设置</a></li>
+							<li><a href="javascript:void(0)">员工设置</a></li>
+							<li><a href="javascript:void(0)">员工设置</a></li>
+						</ul> -->
+					</li>
+					<li url="./pages/category.html">
+					    <a class="row nav-link" href="javascript:void(0)">
+					    <span class="iconfont icon-fenlei-0"></span>
+					    &nbsp;分类管理</a>
+					    <!-- <ul class="text-white nav_two collapse">
+							<li><a href="javascript:void(0)">分类管理</a></li>
+							<li><a href="javascript:void(0)">员工设置</a></li>
+							<li><a href="javascript:void(0)">员工设置</a></li>
+							<li><a href="javascript:void(0)">员工设置</a></li>
+						</ul> -->
+					</li>
+					<li url="./pages/product.html">
+					    <a class="row nav-link" href="javascript:void(0)">
+					    <span class="iconfont icon-chanpin"></span>
+					    &nbsp;产品管理</a>
+					</li>
+					<li url="./pages/order.html">
+					    <a class="row nav-link" href="javascript:void(0)">
+					    <span class="iconfont icon-dingdan"></span>
+					    &nbsp;订单管理</a>
+					</li>
+					<li url="./pages/comment.html">
+					    <a class="row nav-link" href="javascript:void(0)">
+					    <span class="iconfont icon-pingjia-copy"></span>
+					    &nbsp;评论管理</a>
+					</li>
+					<li url="./pages/address.html">
+					    <a class="row nav-link" href="javascript:void(0)">
+					    <span class="iconfont icon-dizhi"></span>
+					    &nbsp;地址管理</a>
+					</li>
+				</ul>
+			</div>
+			<div class="col bg-light right" id = "wrapper" style="overflow-y: auto;max-height: 800px">
+				 
+				</div>
+			</div>
+			</div>
+	</div>
+	<!-- 注册模态框开始 -->
+	<div class="modal fade" id="registerModal" tabindex="-1">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="registeLabel">请注册您的信息</h5>
+	        <button type="button" class="close" onclick="closeRegisterModal()">
+	          <span>&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	         <!-- 表单开始 -->
+		<form id="register_form">
+			<!-- 用户名表单开始 -->
+			<div class="row form-group">
+				<label class="col-2 text-right" for="input_realname">姓名</label>
+				<div class="col">
+					<input class="form-control" type="text" id="input_realname" name="realname" placeholder="realname">
+				</div> 
+			</div>
+			<!-- 用户名表单结束 -->
+			<!-- 密码开始 -->
+			<div class="row form-group">
+				<label class="col-2 text-right" for="input_password">密码</label>
+				<div class="col">
+					<input type="password" class="form-control" id="input_password" name="password" placeholder="Password">
+				</div>
+			</div>
+			<!-- 密码结束 -->
+			<!-- 手机开始 -->
+			<div class="row form-group">
+				<label class="col-2 text-right" for="input_telephone">电话</label>
+				<div class="col">
+					<input class="form-control" type="text" name="telephone" id="input_telephne" placeholder="enter your phone number">
+				</div>
+			</div>
+			<!-- 手机结束 -->
+			<!-- 下拉框开始 -->
+			<div class="row form-group">
+				<label class="col-2 text-right">学院</label>
+				<div class="col">
+					<select name="area" id="inpu_area" class="form-control" style="width:50%">
+						<option value="1" >信息工程学院</option>
+						<option value="2">土木工程学院</option>
+						<option value="3">美术学院</option>
+						<option value="4">音乐学院</option>
+						<option value="5">电器工程学院</option>
+						<option value="6">机械工程学院</option>
+					</select>
+				</div>
+			</div>
+			<!-- 下拉框结束 -->
+			<!-- 性别开始 -->
+			<div class="row form-group">
+				<label class="col-2 text-right">性别</label>
+				<div class="col">
+					<div class="form-check form-check-inline">
+						<input id="input_gender_male" class="form-check-input" type="radio" name="gender" value="male">
+						<label class="form-check-label" for="input_gender_male">男</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input id="input_gender_female" class="form-check-input" type="radio" name="gender" value="female">
+						<label class="form-check-label" for="input_gender_female">女</label>
+					</div>
+				</div>
+			</div>
+			<!-- 性别结束 -->
+			<!-- 爱好开始 -->
+			<div class="row form-group">
+				<label class="col-2 text-right">爱好</label>
+				<div class="col">
+					<div class="form-check form-check-inline">
+						<input id="input_hobby_basketball" class="form-check-input" type="checkbox" name="hobby" value="basketball">
+						<label class="form-check-label" for="input_hobby_basketball">篮球</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input id="input_hobby_football" class="form-check-input" type="checkbox" name="hobby" value="football">
+						<label class="form-check-label" for="input_hobby_football">足球</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input id="input_hobby_sing" class="form-check-input" type="checkbox" name="hobby" value="sing">
+						<label class="form-check-label" for="input_hobby_sing">唱歌</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input id="input_hobby_reading" class="form-check-input" type="checkbox" name="hobby" value="reading">
+						<label class="form-check-label" for="input_hobby_reading">阅读</label>
+					</div>
+				</div>
+			</div>
+			<!-- 爱好结束 -->
+			<!-- 简介开始 -->
+			<div class="row form-group">
+				<label for="input_description" class="col-2 text-right">简介</label>
+				<div class="col" >
+					<textarea id="input_description" name="description" class="form-control">
+					</textarea>
+				</div>
+			</div>
+			<!-- / 简介结束 -->
+		</form>
+		<!-- 表单结束 -->
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" onclick="closeRegisterModal()">取消</button>
+	        <button id="register_certain"type="button" class="btn btn-primary" onclick="certainRegisterModal()">确定</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- 注册模态框结束 -->
+	<!-- 登录模态框开始 -->
+	<div class="modal fade" id="loginModal" tabindex="-1">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="loginLabel">请登录</h5>
+	        <button type="button" class="close" onclick="closeLoginModal()">
+	          <span>&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	         <!-- 表单开始 -->
+		<form id="register_form">
+			<!-- 用户名表单开始 -->
+			<div class="row form-group">
+				<label class="col-2 text-right" for="input_realname">姓名</label>
+				<div class="col">
+					<input class="form-control" type="text" id="input_realname" name="realname" placeholder="realname">
+				</div> 
+			</div>
+			<!-- 用户名表单结束 -->
+			<!-- 密码开始 -->
+			<div class="row form-group">
+				<label class="col-2 text-right" for="input_password">密码</label>
+				<div class="col">
+					<input type="password" class="form-control" id="input_password" name="password" placeholder="Password">
+				</div>
+			</div>
+			<!-- 密码结束 -->
+			<!-- 手机开始 -->
+			<div class="row form-group">
+				<label class="col-2 text-right" for="input_telephone">电话</label>
+				<div class="col">
+					<input class="form-control" type="text" name="telephone" id="input_telephne" placeholder="enter your phone number">
+				</div>
+			</div>
+			<!-- 手机结束 -->
+		</form>
+		<!-- 表单结束 -->
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" onclick="closeLoginModal()">取消</button>
+	        <button id="login_certain" type="button" class="btn btn-primary" onclick="certainLoginModal()">确定</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>		 
+	<!-- 登录模态框结束 -->
+	
+	<!-- 登录确定提示框开始 -->
+	<div class="toast toast_login" style="position:absolute;top:1em;right:1em">
+	  <div class="toast-header">
+   		<i class="fa fa-bell text-success mr-2"></i>
+	    <strong class="mr-auto">success!!</strong>
+	    <!-- <small>11 mins ago</small> -->
+	    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+	      <span>&times;</span>
+	    </button>
+	  </div>
+	  <div class="toast-body">
+	     登录成功
+	  </div>
+	</div>
+	<!-- 登录确定提示框结束 -->
+	<!-- 注册确定提示框开始 -->
+	<div class="toast toast_register" style="position:absolute;top:1em;right:1em">
+	  <div class="toast-header">
+   		<i class="fa fa-bell text-success mr-2"></i>
+	    <strong class="mr-auto">success!!</strong>
+	    <!-- <small>11 mins ago</small> -->
+	    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+	      <span>&times;</span>
+	    </button>
+	  </div>
+	  <div class="toast-body">
+	    恭喜您注册成功
+	  </div>
+	</div>
+	<!-- 注册确定提示框结束 -->
+</body>
+
+</html>

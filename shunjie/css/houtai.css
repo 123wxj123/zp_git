@@ -1,0 +1,197 @@
+html,body,.container {
+			/*让content占满整个屏幕*/
+			height: 100%;
+ }
+ .container {
+	 position: relative;
+	 }
+ .top {
+	 height: 120px;
+	 background-color: #3392ca;
+	 color: #ffffff;
+	 }
+.top>ul::after{
+	content: "";
+	display: block;
+	clear: both;
+}
+.top>ul>li{
+	width: 400px;
+	height: 100px;
+	float: left;
+}
+.top>ul>li:nth-child(2){
+	margin-right: 0px;
+	/*background-color: red;*/
+	position: absolute;
+	right: 0px;
+	top:10px;
+}
+ .container .logo {
+	 font-size: 26px;
+	 line-height: 120px;
+	 /*上下为0 左右为1em*/
+	 padding: 0 1em;
+	 }
+.container .top .right{
+	width: 300px;
+	height: 60px;
+	background-color: #3392ca;
+	position: relative;
+	margin-top: 20px;
+	padding-left: 0px;
+	line-height: 40px;
+}
+.container .top .right>ul::after{
+	content: "";
+	display: block;
+	clear: both;
+}
+.container .top .right>ul>li{
+	width: 60px;
+    float: left;
+}
+.container .top .right a{
+	color: #fff;
+}
+.container .top .right a:hover{
+	color: red;
+}
+.content {
+	 position: absolute;
+			top: 120px;
+			bottom: 0;
+			width: 100%;
+}
+
+ .left
+    {
+	 width: 220px;
+	 background-color: #ffffff;
+	 height: 100%;
+	 float: left;
+	 font-size: 14px;
+}
+ .left > ul.left-nav {
+	 text-align: center;
+}
+ .left > ul.left-nav > li {
+	 line-height: 3em;
+	 border-bottom: 1px solid #cccccc;
+	 position: relative;
+}
+ .left > ul.left-nav > li i.iconfont {
+	 position: absolute;
+	 left: 3em;
+}
+ .left > ul.left-nav > li.current,
+ .left > ul.left-nav > li:hover {
+	 background-color: #cccccc;
+	 color: #ffffff;
+}
+ .left > ul.left-nav > li.current a,
+ .left > ul.left-nav > li:hover a {
+	 color: #ffffff;
+}
+ .right {
+	 margin-left: 220px;
+	 height: 100%;
+	 overflow-y: auto;
+	 padding: 1em;
+	 box-sizing: border-box;
+	 background-color: #cccccc;
+}
+.right>.wrapper>.btns::after{
+	content: "";
+	display: block;
+	clear: both;
+}
+ .wrapper {
+	 background-color: #ffffff;
+	 border-radius: 5px;
+	 padding: 1em;
+	 height: 100%;
+}
+}
+ .btns {
+	 margin-bottom: .5em;
+}
+tbody>ul::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+tbody ul>li{
+	width: 40px;
+	height: 20px;
+	float: left;
+	border-radius: 5px;
+	color: #ffffff;
+	line-height: 20px;
+
+}
+tbody ul>li:nth-child(1){
+	margin-left: 30px;
+    margin-right: 2px;
+    background-color: #ccc;
+}
+tbody ul>li:nth-child(1):hover{
+	background-color: #f93f4d;
+	color: #fff;
+}
+tbody ul>li:nth-child(2){
+    background-color: #ccc;
+}
+tbody ul>li:nth-child(2):hover{
+	background-color: #3441a1;
+	color: #fff;
+}
+.icon-sousu{
+    line-height: 30px;
+    font-size: 22px !important;	
+    color: #ccc;
+}
+.page>ul::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+.page{
+	float: right;
+	margin-top: 10px;
+	margin-right: 20px;
+}
+.page>ul>li{
+	width: 40px;
+	height: 20px;
+	float: left;
+	line-height: 20px;
+	margin-right: 2px;
+    
+	/*background-color:blue; */
+}
+.page>ul>li:nth-child(1){
+	border: 1px solid #ccc;
+	border-radius: 5px;
+     
+}
+.page>ul>li:nth-child(2){
+	width: 8px;
+	background-color: #fff;
+}
+.page>ul>li:nth-child(3){
+	margin-right: 0px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+    
+}
+.page>ul>li:nth-child(1):hover{
+	background-color: blue;
+	color: #fff;
+}
+.page>ul>li:nth-child(3):hover{
+	background-color: blue;
+	color: #fff;
+
+}
+

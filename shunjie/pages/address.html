@@ -1,0 +1,327 @@
+ <style>
+	table{
+		margin-top: 10px;
+		font-size: 16px;
+		border: 1px solid #ccc;
+	}
+	tr,td{
+	height: 45px;
+	line-height: 35px;
+	}
+	.btn{
+	height: 40px;
+	font-size: 16px;
+	margin-top: 20px;
+	margin-right: 10px;
+}
+form.only div:nth-child(1){
+	display: none;
+}
+</style>
+<div id="address" class="wrapper">
+	<button id="btn_add_address" type="button" class="btn btn-primary">添加地址</button>
+	<!-- <button id="btn_search" type="button" class="btn btn-primary">查询</button> -->
+	<button id="btn_barch_address_dels" type="button" class="btn btn-danger">批量删除</button>
+	<table class="table table-hover table-light" id="address_tbl">
+		  <thead class="thead-light">
+		    <tr>
+		      <!-- <th scope="col">ID号</th> -->
+		      <th scope="col">编号</th>
+		      <th scope="col">省份</th>
+		      <th scope="col">城市</th> 
+		      <th scope="col">区域</th>
+		      <th scope="col">地址</th>
+		      <th scope="col">电话</th>
+		      <th scope="col">顾客ID</th>
+		      <th scope="col">操作</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  </tbody>
+	</table>
+	<!-- 添加地址模态框开始 -->
+	<div class="modal fade" id="addAddressModal" tabindex="-1">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="addLabel">请输入要添加/修改的信息</h5>
+	        <button type="button" class="close" onclick="closeAddAddressModal()">
+	          <span>&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <!-- 表单开始 -->
+			<form class="only" id="address_form">
+				<!-- 编码开始 -->
+				<div class="row form-group">
+					<label class="col-2 text-right" for="input_id">编码</label>
+					<div class="col">
+						<input class="form-control" type="text" name="id" id="input_id">
+					</div>
+				</div>
+				<!-- 编码结束 -->
+				
+				<!-- 省份开始 -->
+				<div class="row form-group">
+					<label class="col-2 text-right" for="input_province">省份</label>
+					<div class="col">
+						<input type="text" class="form-control" id="input_province" name="province" placeholder="province">
+					</div>
+				</div>
+				<!-- 省份结束 -->
+				<!-- 城市开始 -->
+				<div class="row form-group">
+					<label class="col-2 text-right" for="input_city">城市</label>
+					<div class="col">
+						<input class="form-control" type="text" id="input_city" name="city" placeholder="city">
+					</div> 
+				</div>
+				<!-- 城市结束 -->
+				<!-- 区域开始 -->
+				<div class="row form-group">
+					<label class="col-2 text-right" for="input_area">ID卡</label>
+					<div class="col">
+						<input type="text" class="form-control" id="input_area" name="area" placeholder="area">
+					</div>
+				</div>
+				<!-- 区域结束 -->
+				<!-- 地址开始 -->
+				<div class="row form-group">
+					<label class="col-2 text-right" for="input_address">状态</label>
+					<div class="col">
+						<input class="form-control" type="text" id="input_address" name="address" placeholder="address">
+					</div> 
+				</div>
+				<!-- 地址结束 -->
+				<!-- 手机开始 -->
+				<div class="row form-group">
+					<label class="col-2 text-right" for="input_telephone">电话</label>
+					<div class="col">
+						<input class="form-control" type="text" name="telephone" id="input_telephne" placeholder="enter your phone number">
+					</div>
+				</div>
+				<!-- 手机结束 -->
+				<!-- 顾客id图片开始 -->
+				<div class="row form-group">
+					<label class="col-2 text-right" for="input_customerId">顾客ID</label>
+					<div class="col">
+						<input class="form-control" type="text" id="input_customerId" name="customerId" placeholder="customerId">
+					</div> 
+				</div>
+				<!-- 顾客id结束 -->
+			
+			</form>
+			<!-- 表单结束 -->
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" onclick="closeAddAddressModal()">取消</button>
+	        <button id="btn_certainAddCustomer" type="button" class="btn btn-primary" onclick="certainAddAddressModal()">确定</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>		 
+	<!-- 添加地址模态框结束  -->
+	<!-- 删除地址成功提示框开始 -->
+	<div class="toast toast_del" style="position: absolute;top: 1em;right: 1em">
+	  <div class="toast-header">
+	    <!-- <i class="fa fa-bell text-success mr-5"></i> -->
+	    <i class="iconfont icon-duigou text-success mr-5"></i>
+	    <strong class="mr-auto">success</strong>
+	    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+	      <span>&times;</span>
+	    </button>
+	  </div>
+	  <div class="toast-body"></div> 
+	</div>
+	<!-- 删除地址成功提示框结束 -->
+	<!-- 添加成功提示开始 -->
+	<div class="toast toast_add" style="position: absolute;top: 1em;right: 1em">
+	  <div class="toast-header">
+	    <!-- <i class="fa fa-bell text-success mr-5"></i>icon-duigou -->
+	    <i class="iconfont icon-duigou text-success mr-5"></i>
+	    <strong class="mr-auto">success</strong>
+	    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+	      <span>&times;</span>
+	    </button>
+	   </div>
+	  <div class="toast-body"></div> 
+	</div>
+	<!-- 添加成功提示结束 -->
+
+</div>
+<script>
+	//var baseURL = "http://134.175.154.93:6677";
+	var baseURL = "http://134.175.100.63:6677";
+	//重载数据
+	function reloadData(){
+		var url = baseURL+"/address/findAll";
+		$.get(url,function(response,status){
+			$("#address_tbl tbody").empty();
+			response.data.forEach(function(item){
+				var newTr = $(`
+					<tr>
+					<td><input type = "checkbox" value = "`+item.id+`"></td>
+					<td>`+item.province+`</td>
+					<td>`+item.city+`</td>
+					<td>`+item.area+`</td>
+					<td>`+item.address+`</td>
+					<td>`+item.telephone+`</td>
+					<td>`+item.customerId+`</td>
+					<td>
+					<a class="btn_del" href="javascript:void(0)">
+						<span class="btn_del fa fa-trash text-danger"></span>
+						</a>
+						<a class="btn_upd" href="javascript:void(0)">
+						<span class="btn_upd fa fa-edit text-primary ml-3"></span>
+						</a>
+					</td>
+					</tr>`);
+				$("#address_tbl").append(newTr);
+			});
+		});
+	}
+	//关闭添加地址模态框
+	function closeAddAddressModal(){
+		$("#addAddressModal").modal("hide");
+	}
+	function certainAddAddressModal(){
+		$("#addAddressModal").modal("hide");
+	}
+	//提示框
+	function toast_add(msg){
+		$(".toast_add .toast-body").text(msg);
+		$(".toast_add").toast("show")
+	}
+	//为提交按钮绑定事件
+	function certainAddAddressModal(){
+		//获取数据
+		var id = $("#address_form input[name=id]").val();
+		var province= $("#address_form input[name=province]").val();
+		var city = $("#address_form input[name=city]").val();
+		var area = $("#address_form input[name=area]").val();
+		var address = $("#address_form input[name=address]").val();
+		var telephone = $("#address_form input[name=telephone]").val();
+		var customerId = $("#address_form input[name=customerId]").val();
+		//和后台交互
+		var url = baseURL+"/address/saveOrUpdate";
+		var data = {
+			id:id,
+			province:province,
+			city:city,
+			area:area,
+			address:address,
+			telephone:telephone,
+			customerId:customerId
+		}
+		console.log(data);
+		$.post(url,data,function(result){
+			if(result.status===200){
+				//关闭模态框
+				closeAddAddressModal();
+				//重载数据
+				reloadData();
+				toast_add("添加或修改成功");
+			}else {
+				alert(result.message);
+			}
+		})
+	}
+	$(function(){
+		//初始话删除成功提示框
+		$(".toast_del").toast({
+			delay:3000
+		});
+		$(".toast_add").toast({
+			delay:3000
+		});
+		reloadData();
+		//为添加按钮绑定事件
+		$("#btn_add_address").on("click",function(event){
+			//显示添加地址模态框
+			$("#addAddressModal").modal("show");
+			//刷新页面后会自动清空数据
+			$("#address_form input[name=id]").val("");
+			$("#address_form input[name=province]").val("");
+			$("#address_form input[name=city]").val("");
+			$("#address_form input[name=area]").val("");
+			$("#address_form input[name=address]").val("");
+			$("#address_form input[name=telephone]").val("");
+			$("#address_form input[name=customerId]").val("");
+		})
+		//为删除按钮绑定事件
+		//利用事件代理
+		$("#address_tbl").on("click","a",function(){
+			switch(this.className){
+				case "btn_del":
+					//获取数据
+					var id = $(this).parents("tr").children().find("input").val();
+
+					//和后台交互
+					var url = baseURL+"/address/deleteById";
+					var data = "id="+id;
+					$.get(url,data,function(result){
+						if(result.status===200){
+							//显示成功提示框
+							toast_del("删除成功");
+							reloadData();
+						}else{
+							alert(result.message);
+						}
+					})
+					break;
+				case "btn_upd":
+					$("#addAddressModal").modal("show");
+					//获取值
+					var id = $(this).parents("tr").children().eq(0).find("input").val();
+					var province = $(this).parents("tr").children().eq(1).text();
+					var city = $(this).parents("tr").children().eq(2).text();
+					var area = $(this).parents("tr").children().eq(3).text();
+					var address = $(this).parents("tr").children().eq(4).text();
+					var telephone = $(this).parents("tr").children().eq(5).text();
+					var customerId = $(this).parents("tr").children().eq(6).text(); 
+					//设置值
+					$("#address_form input[name=id]").val(id);
+					$("#address_form input[name=province]").val(province);
+					$("#address_form input[name=city]").val(city);
+					$("#address_form input[name=area]").val(area);
+					$("#address_form input[name=address]").val(address);
+					$("#address_form input[name=telephone]").val(telephone);
+					$("#address_form input[name=customerId]").val(customerId);
+					break;
+			}
+		});
+		//为批量删除绑定事件
+		$("#btn_barch_address_dels").on("click",function(){
+		//alert(1);
+		var ids = $("#address_tbl input:checkbox").filter(":checked").map(function(index,item){
+			return $(item).val();
+		}).toArray();
+		console.log("ids"+ids);
+		//和后台交互
+		var data="";
+		for(var key in ids){
+			var id = ids[key];
+			if(key==0){
+				data+="ids="+id
+			}else{
+				data+="&ids="+id
+				console.log(data);
+			}
+		}
+		$.ajax({
+			url:baseURL+"/address/batchDelete",
+			method:"POST",
+			data:data,
+			success:function(result){
+				if(result.status===200){
+					toast_del("批量删除地址成功");
+					reloadData();
+				}else{
+					alert(result.message);
+					}
+				}
+			});
+		});
+
+	});
+</script>

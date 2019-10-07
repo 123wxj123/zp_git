@@ -1,0 +1,27 @@
+.table td,
+.table th{
+	text-align: center;
+}
+.table tr:hover{
+	background-color: lightblue;
+}
+.btn_add,.btn_import,.btn_battch{
+	margin: .5em 0;
+}
+.ml-sm-3, .mx-sm-3{
+	margin-left:0rem !important;
+	margin-right:.2rem !important;
+}
+a{
+	color: #fff;
+}
+.right{
+	border: 1px solid #f8f9fa;
+	border-radius: 5px;
+}
+.content{
+	position: absolute;
+	top:130px;
+	bottom: 0;
+	width: 100%;
+}
