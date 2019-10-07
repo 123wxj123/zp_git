@@ -1,0 +1,229 @@
+ <div class="main">
+	<!-- 商家审核 -->
+	<!-- 标签页 -->
+	<div class="layui-tab-content" style="margin-top: -15px ">
+		<div class="layui-tab-item layui-show">
+			<div class="row">
+				<div class="form-group col-2">
+			      <select id="one" class="form-control">
+			        <option selected>全部</option>
+			        <!-- <option>...</option> -->
+			      </select>
+		    	</div> 
+				<button id="btn_allgo" type="button" class="go btn btn-success" style="margin-left: 10px; height: 36px; ">一键通过</button> 
+			</div>
+		</div>
+	</div>
+    <table id = "Business_tbl" class="table table-hover table-light" style="margin-top: -10px ">
+	<thead>
+		<tr>
+		  <th scope="col">#</th>
+		  <th scope="col">企业名称</th>
+		  <th scope="col">联系人</th> 
+		  <th scope="col">联系方式</th>
+		  <th scope="col">行业</th>
+		  <th scope="col">所在地</th>
+		  <th scope="col">公司规模</th>
+		  <th scope="col">详情</th>
+		  <th scope="col">操作</th>
+		</tr>
+	</thead>
+	<tbody id="Business_tbl">
+	</tbody>
+	</table>
+	<!-- <button id="btn_allgo" type="button" class="go btn btn-success" style="margin-left: 10px ">一键通过</button>  -->
+</div>
+<style>
+	thead{
+		background-color: #1d2b36;
+		color: #fff;
+	}
+	table{
+		text-align: center;
+	}
+	.col-2{
+		padding-left: 0px;
+	}
+</style>
+<script>
+	$(function(){
+		var baseURL = "http://203.195.246.58:7777";
+		//重载数据
+		function reload(){
+			$("#Business_tbl tbody").empty();
+			$.get(baseURL+'/Business/findAll',function(response,status){
+				response.data.forEach(function(item,index){
+					if(item.status==="审核通过"){
+						$(`
+						<tr>
+					  	<td><input type="checkbox" value=`+item.id+`></td>
+					  	<td>`+item.name+`</td>
+					  	<td>`+item.contactName+`</td>
+					  	<td>`+item.contactPhone+`</td>
+					  	<td>`+item.industry+`</td>
+					  	<td>`+item.location+`</td>
+					  	<td>`+item.scale+`</td>
+					  	<td><a href="#" class="details">详情</a></td>
+					  	<td class="text-success">
+					  		审核通过
+					  	</td>
+					  </tr>
+					`).appendTo('#Business_tbl');
+					}else if(item.status==="拒绝"){
+						$(`
+						<tr>
+					  	<td><input type="checkbox" value=`+item.id+`></td>
+					  	<td>`+item.name+`</td>
+					  	<td>`+item.contactName+`</td>
+					  	<td>`+item.contactPhone+`</td>
+					  	<td>`+item.industry+`</td>
+					  	<td>`+item.location+`</td>
+					  	<td>`+item.scale+`</td>
+					  	<td><a href="#" class="details">详情</a></td>
+					  	<td class="text-danger">
+					  		拒绝
+					  	</td>
+					  </tr>
+					`).appendTo('#Business_tbl');
+					}else if(item.status==="待审核"){
+						$(`
+						<tr>
+					  	<td><input type="checkbox" value=`+item.id+`></td>
+					  	<td>`+item.name+`</td>
+					  	<td>`+item.contactName+`</td>
+					  	<td>`+item.contactPhone+`</td>
+					  	<td>`+item.industry+`</td>
+					  	<td>`+item.location+`</td>
+					  	<td>`+item.scale+`</td>
+					  	<td><a href="#" class="details">详情</a></td>
+					  	<td>
+					  		<button id="btn_go" type="button" class="go btn btn-success btn-sm">通过</button> 
+					  		<button id="btn_refuse" type="button" class="btn_refuse btn btn-danger btn-sm">拒绝</button> 
+					  	</td>
+					  </tr>
+					`).appendTo('#Business_tbl');
+					}
+				})
+			})
+		}
+		reload();
+		//为按钮绑定事件
+		$("#Business_tbl").on("click","button",function(){
+			switch(this.className){
+				case "go btn btn-success btn-sm":
+				var url1 = baseURL+"/Business/saveOrUpdate";
+				var id = $(this).parents("tr").children().find("input").val();
+				var url = baseURL+"/Business/findAll";
+				$.get(url,function(response){
+					response.data.forEach(function(item){
+						if(item.id==id){
+							var data = {
+								id:item.id,
+								name:item.name,
+								contactName:item.contactName,
+								contactPhone:item.contactPhone,
+								industry:item.industry,
+								location:item.location,
+								scale:item.scale,
+								province:item.province,
+								city:item.city,
+								establishedTime:item.establishedTime,
+								registeredCapital:item.registeredCapital,
+								description:item.description,
+								businessLicense:item.businessLicense,
+								status:"审核通过"
+							}
+							$.post(url1,data,function(response){
+								if(response.status==200){
+									alert("save successfully");
+									reload();
+								}else{
+									alert(response.message);
+								}
+							})
+						}
+					})
+				})
+				break;
+				case "btn_refuse btn btn-danger btn-sm":
+				var url1 = baseURL+"/Business/saveOrUpdate";
+				var id = $(this).parents("tr").children().find("input").val();
+				var url = baseURL+"/Business/findAll";
+				$.get(url,function(response){
+					response.data.forEach(function(item){
+						if(item.id==id){
+							var data = {
+								id:item.id,
+								name:item.name,
+								contactName:item.contactName,
+								contactPhone:item.contactPhone,
+								industry:item.industry,
+								location:item.location,
+								scale:item.scale,
+								province:item.province,
+								city:item.city,
+								establishedTime:item.establishedTime,
+								registeredCapital:item.registeredCapital,
+								description:item.description,
+								businessLicense:item.businessLicense,
+								status:"拒绝"
+							}
+							$.post(url1,data,function(response){
+								if(response.status==200){
+									alert("save successfully");
+									reload();
+								}else{
+									alert(response.message);
+								}
+							})
+						}
+					})
+				})
+				break;
+			}
+		})
+		//为一键通过按钮绑定事件
+		$("#btn_allgo").on("click",function(){
+			alert(1);
+			//获取要修改的id
+			var idss = $("#Business_tbl input:checkbox").filter(":checked").map(function(index,item){
+				return $(item).val();
+			}).toArray();
+			idss.forEach(function(id){
+				var url1 = baseURL+"/Business/saveOrUpdate";
+				// var id = $(this).parents("tr").children().find("input").val();
+				var url = baseURL+"/Business/findAll";
+				$.get(url,function(response){
+					response.data.forEach(function(item){
+						if(item.id==id){
+							var data = {
+								id:item.id,
+								name:item.name,
+								contactName:item.contactName,
+								contactPhone:item.contactPhone,
+								industry:item.industry,
+								location:item.location,
+								scale:item.scale,
+								province:item.province,
+								city:item.city,
+								establishedTime:item.establishedTime,
+								registeredCapital:item.registeredCapital,
+								description:item.description,
+								businessLicense:item.businessLicense,
+								status:"审核通过"
+							}
+							$.post(url1,data,function(response){
+								if(response.status==200){
+									alert("save successfully");
+									reload();
+								}else{
+									alert(response.message);
+								}
+							})
+						}
+					})
+				})
+			})
+		})
+	})
+</script>

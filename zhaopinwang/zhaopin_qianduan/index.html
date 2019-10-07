@@ -1,0 +1,550 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>招聘网前端</title>
+    <link rel="stylesheet" href="style/style.css"/>
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1329399_7eixj5hanx8.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.css">
+    <script type="text/javascript" src="./js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="./bootstrap/js/bootstrap.js"></script>
+</head>
+<body>
+    <div class="head">
+        <div class="h_c">
+            <div class="hl1">
+                <p>北京 <span>[切换城市]</span></p>
+            </div>
+            <div class="hr1" style="margin-left: 880px ">
+                <p><a href="#" style="text-decoration: none ; " >登录 / 注册</a></p>
+                <p><a href="#" style="text-decoration: none " >个人中心 <img src="images/index/u113.png" /></a></p>
+                <p><a href="#" style="text-decoration: none " >商家中心 <img src="images/index/u113.png" /></a></p>
+            </div>
+        </div>
+    </div>
+    <div class="h_se">
+        <div class="s_logo">
+            <img id="u135_img" class="img " src="images/index/12.png">
+        </div>
+        <div class="s_search">
+            <input type="text" id="ss" name="job"/>
+            <input type="button" id="sb" value="搜职位"  />
+            <img  id="si" src="images/index/u138.png" />
+            <ul>
+                <li><a href="#">收营员</a></li>
+                <li><a href="#">收营员</a></li>
+                <li><a href="#">收营员</a></li>
+                <li><a href="#">收营员</a></li>
+                <li><a href="#">收营员</a></li>
+            </ul>
+        </div>
+ 
+    </div>
+    <div class="hm">
+        <div class="hm_1">
+            <div class="hm_1_l">职位：</div>
+            <div class="hm_1_r">
+                <ul  id="job">
+                </ul>
+            </div>
+            <div class="c"></div>
+        </div>
+        <div class="hm_1">
+            <div class="hm_1_l">地点：</div>
+            <div class="hm_1_r">
+                <ul id="location">
+                     <div class="text">
+                        <ul>
+                          <li>qq</li>
+                          <li>aa</li>
+                          <li>aa</li>
+                          <li>aa</li>
+                          <li>aa</li>
+                          <li>aa</li>
+                        </ul>
+                     </div>
+                </ul>
+            </div>
+            <div class="c"></div>
+        </div>
+        <div class="hm_1">
+            <div class="hm_1_l">福利：</div>
+            <div class="hm_1_r">
+                <ul id="welfare">
+                </ul>
+            </div>
+            <div class="c"></div>
+        </div>
+        <div class="hm_1 b">
+            <div class="hm_1_l">已选：</div>
+            <div class="hm_1_r">
+                <div class="yx">超市/零售 - 收营员 <img id="u192_img" class="img " src="images/index/u192.png"></div>
+            </div>
+            <div class="c"></div>
+        </div>
+    </div>
+    <div id="con_menu">
+    </div>
+    <div class="ym">
+        <ul>
+            <li>&lt;</li>
+            <li>1</li>
+            <li>2</li>
+            <li>...</li>
+            <li>10</li>
+            <li>&gt;</li>
+        </ul>
+    </div>
+    <div class="f" style=" border:1px solid #999;">
+        ©2015-2019 ####################有限公司 ##ICP备#############号 ##公网安备###############号 联系电话：####-###########
+    </div>
+    <!-- 一键报名模态框开始 -->
+    <div class="modal fade" id="allGoModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="registeLabel">快速报名</h5>
+            <button type="button" class="close" onclick="closeAllGoModal()">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+             <!-- 表单开始 -->
+            <form id="allGo_form">
+                <!-- 姓名开始 -->
+                <div class="row form-group">
+                    <label class="col-3 text-right" for="input_realname" style="line-height: 38px;">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:</label>
+                    <div class="col-8">
+                        <input class="form-control" type="text" id="input_realname" name="realname" placeholder="realname" style="line-height: 38px;">
+                    </div> 
+                </div>
+                <!-- 姓名结束 -->
+                <!-- 用户名开始 -->
+                <div class="row form-group">
+                    <label class="col-3 text-right" for="input_username" style="line-height: 38px;">用&nbsp;&nbsp;户&nbsp;&nbsp;名:</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" id="input_username" name="username" placeholder="username">
+                    </div>
+                </div>
+                <!-- 用户名结束 -->
+                 <!-- 性别开始 -->
+                <div class="row form-group">
+                    <label class="col-3 text-right">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:</label>
+                    <div class="col-8">
+                        <div class="form-check form-check-inline">
+                            <input id="input_gender_male" class="form-check-input" type="radio" name="gender" value="男">
+                            <label class="form-check-label" for="input_gender_male">男</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input id="input_gender_female" class="form-check-input" type="radio" name="gender" value="女">
+                            <label class="form-check-label" for="input_gender_female">女</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- 性别结束 -->
+                <!-- 出生年月开始 -->
+                <div class="row form-group">
+                    <label class="col-3 text-right" for="input_birth" style="line-height: 38px;">出生年月:</label>
+                    <div class="col-8">
+                        <input class="form-control" type="text" name="birth" id="input_birth" placeholder="enter your birth">
+                    </div>
+                </div>
+                <!-- 出生年月结束 -->
+                <!-- 最高学历开始 -->
+                <div class="row form-group">
+                    <label class="col-3 text-right" for="input_education" style="line-height: 38px;">最高学历:</label>
+                    <div class="col-8">
+                        <input class="form-control" type="text" name="education" id="input_education" placeholder="enter your education">
+                    </div>
+                </div>
+                <!-- 最高学历结束 -->
+                <!-- 工作经验开始 -->
+                <div class="row form-group">
+                    <label class="col-3 text-right" for="input_workTime" style="line-height: 38px;">工作经验:</label>
+                    <div class="col-8">
+                        <input class="form-control" type="text" name="workTime" id="input_workTime" placeholder="enter your workTime">
+                    </div>
+                </div>
+                <!-- 工作经验结束 -->
+                <!-- 手机开始 -->
+                <div class="row form-group">
+                    <label class="col-3 text-right" for="input_telephone" style="line-height: 38px;">电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话:</label>
+                    <div class="col-8">
+                        <input class="form-control" type="text" name="telephone" id="input_telephne" placeholder="enter your phone number">
+                    </div>
+                </div>
+                <!-- 手机结束 -->
+                <!-- id开始 -->
+                <div class="row"  style="display:none">
+                    <label class="col-4 text-right" for="input_id">id:</label>
+                    <div class="col">
+                        <input class="form-control" type="text" id="input_id" name="id" placeholder=" ">
+                    </div>
+                </div>
+                <!-- id结束 -->
+            </form>
+            <!-- 表单结束 -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeAllGoModal()">取消</button>
+            <button id="save" type="button" class="btn btn-primary">确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 一键报名模态框结束 -->
+    <!-- 一键报名成功提示开始 -->
+    <div class="toast" style="position: absolute;top: 3em;right: 1em">
+      <div class="toast-header">
+        <!-- <i class="fa fa-bell text-success mr-5"></i>icon-duigou -->
+        <i class="iconfont icon-duigou text-success mr-3"></i>
+        <strong class="mr-auto">success</strong>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+          <span>&times;</span>
+        </button>
+       </div>
+      <div class="toast-body"></div> 
+    </div>
+    <!-- 一键报名成功提示结束 -->
+</body>
+<script>
+    $(function(){
+        var baseURL = "http://203.195.246.58:7777";
+        function quch(arr){
+            arr.forEach(function(item,index){
+                for(var i=index+1;i<arr.length;i++){
+                    if(item==arr[i]){
+                        arr.splice(i,1);
+                        i++;
+                    }
+                }
+            })
+        }
+        //职位:数据重载
+        function reloadWork(){
+            var url = baseURL+"/Employment/findAll";
+            $.get(url,function(response){
+                //清空
+                $("#job").empty();
+                $(`
+                    <li><a href="javascript:;"   class="s btn_job" id="btn_job">全部</a></li>
+                `).appendTo("#job");
+                var Jobs = [];
+                response.data.forEach(function(item,index){
+                    Jobs[index]=item.job
+                    quch(Jobs);
+                })
+                Jobs.forEach(function(item){
+                    $(`
+                        <li><a href="javascript:;" >`+item+`</a></li>
+                    `).appendTo("#job");
+                })
+            })
+        }
+        reloadWork()
+        
+        //地点：省分数据重载
+        function reloadLocation(){
+            var url = baseURL + "/Province/findAll";
+            $.get(url,function(response){
+                //清空
+                $("#location").empty();
+                $(`
+                    <li><a href="javascript:;" class="s btn_location">全部</a></li>
+                `).appendTo("#location");
+                response.data.forEach(function(item,index){
+                    $(`
+                      <li><a href="javascript:;" id="`+item.id+`">`+item.name+`</a>
+                      </li>  
+                    `).appendTo("#location");
+                })
+            })
+        }
+        reloadLocation();
+        //城市数据 
+        $("#location").on("click","a",function(){
+            $(this).attr("class","s");
+            // alert(1);
+            var city = $(this).text();
+            var id = this.id;
+            var url = baseURL + "/City/findAll";
+            $.get(url,function(response){
+                $("#location").empty();
+                $(`
+                    <li><a href="javascript:;" class="s">全部</a></li>
+                `).appendTo("#location");
+                response.data.forEach(function(item,index){
+                    if(item.provinceId==id){
+                        $(`
+                            <li><a href="javascript:;">`+item.name+`</a></li>
+                        `).appendTo("#location");
+                    }
+                })
+            })
+        })
+        
+        //福利：数据重载
+        function reloadWelfare(){
+            var url = baseURL + "/Welfare/findAll";
+            $.get(url,function(response){
+                //清空
+                $("#welfare").empty();
+                $(`
+                    <li><a href="javascript:;" class="s btn_welfare">全部</a></li>
+                `).appendTo("#welfare");
+                var welfares=[];
+                response.data.forEach(function(item,index){
+                    welfares[index]=item.name;
+                    quch(welfares);
+                })
+                welfares.forEach(function(item){
+                    $(`
+                        <li><a href="javascript:;" >`+item+`</a></li>  
+                    `).appendTo("#welfare");
+                })
+            })
+        }
+        reloadWelfare();
+        //显示详情
+        function reloadDetails(){
+            var url = baseURL+"/Employment/findAll";
+            //清空
+            $.get(url,function(response){
+                $("#con_menu").empty();
+                response.data.forEach(function(item){
+                    $(`
+                       <div class="m">
+                        <h4>`+item.title+`</h4>
+                        <div class="m_1">`+item.salary+` 元/月</div>
+                        <div class="w">
+                        <div class="m_2 c1">`+item.welfare+`</div>
+                        <div class="m_2 c2">包吃</div>
+                        <div class="m_2 c3">包住</div>
+                        </div>
+                        <div class="m_9">
+                            <p>工作时间：`+item.workingHours+`</p>
+                            <p>工作类型：`+item.job+`</p>
+                            <p>招聘人数：`+item.num+`人</p>
+                            <p>工作地点：`+item.province+`</p>
+                        </div>
+                        <div class="m_3">一键报名<span style = "display:none">`+item.id+`</span></div>
+                       </div>  
+                    `).appendTo("#con_menu");
+                })
+            })
+        }
+        reloadDetails();
+        //根据城市名筛选
+        $("#location").on("click","a",function(){
+            $(this).attr("class","s");
+            var city = $(this).text();
+            var url = baseURL+"/Employment/findAll";
+            var data = {
+                title:city
+            }
+            $.get(url,data,function(response){
+                $("#con_menu").empty();
+                response.data.forEach(function(item,index){
+                    if(item.province==city){
+                        $(`
+                       <div class="m">
+                        <h4>`+item.title+`</h4>
+                        <div class="m_1">`+item.salary+` 元/月</div>
+                        <div class="w">
+                        <div class="m_2 c1">`+item.welfare+`</div>
+                        <div class="m_2 c2">包吃</div>
+                        <div class="m_2 c3">包住</div>
+                        </div>
+                        <div class="m_9">
+                            <p>工作时间：`+item.workingHours+`</p>
+                            <p>工作类型：`+item.job+`</p>
+                            <p>招聘人数：`+item.num+`人</p>
+                            <p>工作地点：`+item.province+`</p>
+                        </div>
+                        <div class="m_3">一键报名<span style = "display:none">`+item.id+`</span></div>
+                       </div>  
+                    `).appendTo("#con_menu"); 
+                    }
+                })
+            })
+        })
+        //职位筛选
+        $("#job").on("click","a",function(){
+            // alert(1);
+            //获取要筛选的job名称
+            $(this).attr("class","s");
+
+            var job = $(this).text();
+            var url = baseURL+"/Employment/findAll";
+            $.get(url,function(response){
+                $("#con_menu").empty();
+                response.data.forEach(function(item){
+                    if(item.job==job){
+                       $(`
+                       <div class="m">
+                        <h4>`+item.title+`</h4>
+                        <div class="m_1">`+item.salary+` 元/月</div>
+                        <div class="w">
+                        <div class="m_2 c1">`+item.welfare+`</div>
+                        <div class="m_2 c2">包吃</div>
+                        <div class="m_2 c3">包住</div>
+                        </div>
+                        <div class="m_9">
+                            <p>工作时间：`+item.workingHours+`</p>
+                            <p>工作类型：`+item.job+`</p>
+                            <p>招聘人数：`+item.num+`人</p>
+                            <p>工作地点：`+item.province+`</p>
+                        </div>
+                        <div class="m_3">一键报名<span style = "display:none">`+item.id+`</span></div>
+                       </div>  
+                    `).appendTo("#con_menu"); 
+                    }
+                })
+            })
+        })
+        // 为全部查看职位标签绑定事件
+        $("#job,#welfare").on("click","a",function(){
+           reloadDetails() 
+           // alert(1);
+        })
+        //根据福利筛选
+        $("#welfare").on("click","a",function(){
+            $(this).attr("class","s");
+
+            // alert(1);
+            var title = $(this).text();
+            var url = baseURL+"/Employment/findAll";
+            $.get(url,function(response){
+                $("#con_menu").empty();
+                response.data.forEach(function(item){
+                    if(item.welfare==title){
+                        $(`
+                       <div class="m">
+                        <h4>`+item.title+`</h4>
+                        <div class="m_1">`+item.salary+` 元/月</div>
+                        <div class="w">
+                        <div class="m_2 c1">`+item.welfare+`</div>
+                        <div class="m_2 c2">包吃</div>
+                        <div class="m_2 c3">包住</div>
+                        </div>
+                        <div class="m_9">
+                            <p>工作时间：`+item.workingHours+`</p>
+                            <p>工作类型：`+item.job+`</p>
+                            <p>招聘人数：`+item.num+`人</p>
+                            <p>工作地点：`+item.province+`</p>
+                        </div>
+                        <div class="m_3">一键报名<span style = "display:none">`+item.id+`</span></div>
+                       </div>  
+                    `).appendTo("#con_menu"); 
+                    }
+                })
+            })
+        })
+        //一键报名按钮绑定事件
+        var oid;
+        $("#con_menu").on("click",".m_3",function(){
+            // alert(1);
+            oid = $(this).find("span").text();
+            $("#allGoModal").modal("show");
+            //刷新页面后自动清空表单数据
+            $("#allGo_form input[name=realname]").val("");
+            $("#allGo_form input[name=username]").val("");
+            $("#allGo_form input[name=birth]").val("");
+            $("#allGo_form input[name=education]").val("");
+            $("#allGo_form input[name=workTime]").val("");
+            $("#allGo_form input[name=telephone]").val("");
+        })
+        //为save 按钮绑定事件
+        $("#save").on("click",function(){
+            // alert(1);
+            var employmentId = oid;
+            // var id = $("#allGo_form input[name=id]").val();
+            var realname = $("#allGo_form input[name=realname]").val();
+            var username = $("#allGo_form input[name=username]").val();
+            var birth = $("#allGo_form input[name=birth]").val();
+            var education = $("#allGo_form input[name=education]").val();
+            var workTime = $("#allGo_form input[name=workTime]").val();
+            var telephone = $("#allGo_form input[name=telephone]").val();
+            var gender = $("#allGo_form input[type=radio]:checked").val();
+            //和后台交互
+            var url = baseURL +"/Jobhunter/quickRegistration";
+            if(!telephone==0){
+                var data = {
+                employmentId:employmentId,
+                realname:realname,
+                username:username,
+                birth:birth,
+                education:education,
+                workTime:workTime,
+                gender:gender,
+                telephone:telephone
+                }
+            } 
+            console.log("data",data);
+            $.post(url,data,function(result){
+                if(result.status===200){
+                //关闭模态框
+                closeAllGoModal();
+                // alert("注册成功");
+                toast("恭喜您报名成功！！");
+                }else {
+                    alert(result.message);
+                }
+            })
+        })
+        // 初始化一键报名成功提示框
+        $(".toast").toast({
+            delay:3000
+        })
+        //为搜索职位绑定事件
+        $("#sb").on("click",function(){
+            // aler t(1);
+            var job = $("input[name=job]");
+            console.log("job",job);
+            //和后台交互
+            var url = baseURL+"/JobType/findAll";
+            var data = [];
+            $.get(url,function(response){
+                arr=response.data.filter(function(item,index){
+                    if(item.job===job){
+                        return item;
+                    }
+                });
+                $("#con_menu").empty();
+                arr.forEach(function(item){
+                    $(`
+                        <div class="m">
+                        <h4>`+item.title+`</h4>
+                        <div class="m_1">`+item.salary+` 元/月</div>
+                        <div class="w">
+                        <div class="m_2 c1">`+item.welfare+`</div>
+                        <div class="m_2 c2">包吃</div>
+                        <div class="m_2 c3">包住</div>
+                        </div>
+                        <div class="m_9">
+                            <p>工作时间：`+item.workingHours+`</p>
+                            <p>工作类型：`+item.job+`</p>
+                            <p>招聘人数：`+item.num+`人</p>
+                            <p>工作地点：`+item.province+`</p>
+                        </div>
+                        <div class="m_3">一键报名<span style = "display:none">`+item.id+`</span></div>
+                       </div>  
+                    `).appendTo("#con_menu"); 
+                })
+            })
+        })
+    })
+    function toast(msg){
+        $(".toast .toast-body").text(msg);
+        $(".toast").toast("show")
+    }
+    //关闭模态框
+    function closeAllGoModal(){
+        $("#allGoModal").modal("hide");
+    }
+</script>
+</html>

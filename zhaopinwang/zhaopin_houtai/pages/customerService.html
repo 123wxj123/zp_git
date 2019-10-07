@@ -1,0 +1,378 @@
+
+<div class="main">
+	<!-- 客服管理 -->
+	<div class="button row" style="margin-right:0px;margin-bottom:20px;">
+	<input class="form-control-2" style="height:40px" type="text" id="input_service" name="service" placeholder="Please enter what you want....">
+	<button id="search_service" type="button" class="btn btn-outline-primary" style="height:40px">查询</button>
+	<button id="search_back" type="button" class="btn form-group btn-primary ml-2">返回</button>
+	<button id="add_service" type="button" class="btn form-group btn-primary ml-2">添加客服</button>
+	<button id="impot_service" type="button" class="btn form-group btn-primary ml-2">导入客服</button>
+	</div>
+	<!-- 标签页 -->
+	<div class="layui-tab">
+	  <ul class="layui-tab-title">
+	    <li class="layui-this">客服列表</li>
+	  </ul>
+	  <div class="layui-tab-content">
+	    <div class="layui-tab-item layui-show">
+	    <div class="row">
+			<div class="form-group col-2">
+		      <select id="one" class="form-control">
+		        <option selected>在线</option>
+		        <option>离线</option>
+		      </select>
+		    </div>
+		    <div class="form-group col-2">
+		      <select id="two" class="form-control">
+		        <option selected>女</option>
+		        <option>男</option>
+		      </select>
+		    </div>
+		     <!-- <span style="display: inline-block; line-height: 30px ">（当前标准  人）</span> -->
+		     <span>(当前标准</span>
+		     <span style="display: inline-block;width: 20px; height: 28px; border: 1px solid #ccc "></span>
+		     <span>人)</span>
+		    <!-- <button id="add_service" type="button" class="btn form-group btn-primary ml-4">添加用户</button>
+			<button id="import_service" type="button" class="btn form-group btn-primary ml-4">导入用户</button> -->
+	    </div>
+	    <table id = "CustomerService_tbl" class="table table-hover table-light" style="text-align: center; ">
+		<thead>
+			<tr>
+			  <th scope="col">#</th>
+			  <th scope="col">用户名</th>
+			  <th scope="col">姓名</th> 
+			  <th scope="col">性别</th>
+			  <th scope="col">状态</th>
+			  <th scope="col">操作</th>
+			</tr>
+		</thead>
+		<tbody id="CustomerService_tbl">
+		</tbody>
+		</table>
+	    <!-- 内容1 -->
+	    </div>
+	  </div>
+	</div>
+	<!-- 添加修改客服摩太框开始 -->
+	<div class="modal fade" id="service_modal" tabindex="-1">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="addLabel">添加或修改客服</h5>
+	        <button type="button" class="close" onclick="close_service_modal()">
+	          <span>&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+			<form class="only" id="service_form">
+				<div class="row" style="padding:10px">
+					<div class="col-12">
+						<div class="row">
+							<label class="col-3 text-right" for="input_tusername">用&nbsp;户&nbsp;&nbsp;名:</label>
+							<div class="col">
+								<input class="form-control" type="text" id="input_username" name="username" placeholder="">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" style="padding:10px">
+					<div class="col-12">
+						<div class="row">
+							<label class="col-3 text-right" for="input_realname">真实姓名:</label>
+							<div class="col">
+								<input class="form-control" type="text" id="input_realname" name="realname" placeholder="">
+							</div>
+						</div>
+					</div> 
+				</div>
+				<div class="row" style="padding:10px">
+					<div class="col-12">
+						<div class="row form-group">
+							<label class="col-3 text-right">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:</label>
+							<div class="col-6">
+								<div class="form-check form-check-inline">
+									<input id="input_gender_male" class="form-check-input" type="radio" name="gender" value="男">
+									<label class="form-check-label" for="input_gender_male">男</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input id="input_gender_female" class="form-check-input" type="radio" name="gender" value="女">
+									<label class="form-check-label" for="input_gender_female">女</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" style="padding:10px">
+					<div class="col-12">
+						<div class="row">
+							<label class="col-3 text-right" for="input_status">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态:</label>
+							<div class="col">
+								<input class="form-control" type="text" id="input_status" name="status" placeholder=" ">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row"  style="display:none">
+				<label class="col-4 text-right" for="input_id">id:</label>
+				<div class="col">
+					<input class="form-control" type="text" id="input_id" name="id" placeholder=" ">
+				</div>
+			</div>
+			</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" onclick="close_service_modal()">取消</button>
+	        <button type="button" class="btn btn-primary" id="save_service">确定</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- 添加修改客服摩太框结束 -->
+</div>
+<script>
+	$(function(){
+		var baseURL = "http://203.195.246.58:7777";
+		//根据状态查询
+		var data;
+		$("#one").change(function(){
+			var val = $(this).val();
+			var obj = {
+				status:val
+			}
+			//清空
+			$("#CustomerService_tbl tbody").empty();
+			$.get(baseURL+"/CustomerService/findByEducation",obj,function(response){
+				response.data.forEach(function(item,index){
+					if(item.status==="在线"){
+						$(`
+						<tr>
+						<td>
+						<input type="checkbox" value=`+item.id+`>
+						</td>
+						<td>`+item.username+`</td>
+						<td>`+item.realname+`</td>
+						<td>`+item.gender+`</td>
+						<td>`+item.status+`</td>
+						<td>
+					  		<button id="btn_delete" type="button" class="btn form-group btn-danger ml-2 btn-sm">删除</button>
+					  	</td>
+						</tr>
+					`).appendTo("tbody");
+					}else if(item.status==="离线"){
+						$(`
+						<tr>
+						<td>
+						<input type="checkbox" value=`+item.id+`>
+						</td>
+						<td>`+item.username+`</td>
+						<td>`+item.realname+`</td>
+						<td>`+item.gender+`</td>
+						<td>`+item.status+`</td>
+						<td>
+					  		<button id="btn_delete" type="button" class="btn form-group btn-danger ml-2 btn-sm">删除</button>
+					  	</td>
+						</tr>
+					`).appendTo("tbody");
+					}
+				})
+			})
+		})
+		//根据性别查询
+		$("#two").change(function(){
+			var val = $(this).val();
+			var obj = {
+				gender:val
+			}
+			//清空
+			$("#CustomerService_tbl tbody").empty();
+			$.get(baseURL+"/CustomerService/findByGender",obj,function(response){
+				response.data.forEach(function(item,index){
+					if(item.gender==="男"){
+						$(`
+						<tr>
+						<td>
+						<input type="checkbox" value=`+item.id+`>
+						</td>
+						<td>`+item.username+`</td>
+						<td>`+item.realname+`</td>
+						<td>`+item.gender+`</td>
+						<td>`+item.status+`</td>
+						<td>
+					  		<button id="btn_delete" type="button" class="btn form-group btn-danger ml-2 btn-sm">删除</button>
+					  	</td>
+						</tr>
+					`).appendTo("tbody");
+					}else if(item.gender==="女"){
+						$(`
+						<tr>
+						<td>
+						<input type="checkbox" value=`+item.id+`>
+						</td>
+						<td>`+item.username+`</td>
+						<td>`+item.realname+`</td>
+						<td>`+item.gender+`</td>
+						<td>`+item.status+`</td>
+						<td>
+					  		<button id="btn_delete" type="button" class="btn form-group btn-danger ml-2 btn-sm">删除</button>
+					  	</td>
+						</tr>
+					`).appendTo("tbody");
+					}
+				})
+			})
+		})
+		//重载数据
+		function reloadService(){
+			//1.清空tbody
+			$("#CustomerService_tbl tbody").empty();
+			var url = baseURL+"/CustomerService/findAll";
+			$.get(url,function(response,status){
+				response.data.forEach(function(item){
+					$(`
+					<tr>
+					<td>
+					<input type="checkbox" value=`+item.id+`>
+					</td>
+					<td>`+item.username+`</td>
+					<td>`+item.realname+`</td>
+					<td>`+item.gender+`</td>
+					<td>`+item.status+`</td>
+					<td>
+				  		<button id="btn_delete" type="button" class="btn form-group btn-danger ml-2 btn-sm">删除</button>
+				  	</td>
+					</tr>
+					`).appendTo("tbody");
+				})
+			})
+		}
+		reloadService();
+		//为添加客服按钮绑定事件
+		$("#add_service").on("click",function(){
+			$("#service_modal").modal("show");
+		})
+		//为保存按钮绑定事件
+		$("#save_service").on("click",function(){
+			// alert(1);
+			//获取数据
+			var id = $("input[name=id]").val();
+			var username = $("input[name=username]").val();
+			var realname = $("input[name=realname]").val();
+			var gender = $("input[type=radio]:checked").val();
+			var status = $("input[name=status]").val();
+			//和后台交互
+			var url = baseURL+"/CustomerService/saveOrUpdate";
+			var data = {
+				id:id,
+				username:username,
+				realname:realname,
+				gender:gender,
+				status:status
+			}
+			$.post(url,data,function(response,status){
+				alert("save successfully");
+				close_service_modal();
+				reloadService();
+			})
+		})
+		//为删除按钮绑定事件
+		$("#CustomerService_tbl").on("click","#btn_delete",function(){
+			// alert(1);
+			//获取要删除的id
+			var id = $(this).parents("tr").children().find("input").val();
+			console.log("id",id);
+			//和后台交互
+			var url = baseURL+"/CustomerService/deleteById";
+			var data = {
+				id:id
+			}
+			$.post(url,data,function(result){
+				if(result.status===200){
+					alert("deleted successfully")
+					reloadService();
+				}else {
+					alert(result.message);
+				}
+			})
+		})
+		//根据用户名查找
+		//为查询按钮绑定事件
+		$("#search_service").on("click",function(){
+			// alert(1);
+			//获取数据
+			var username = $("input[name=username]").val();
+			//和后台交互
+			var url = baseURL+"/CustomerService/findByUsername";
+			var data = [];
+			$.get(url,data,function(response,status){
+				arr = response.data.filter(function(item){
+					if(item.username===username){
+						return item;
+					}
+					//查询到之后就追加到tbody后
+					//首先清空tbody
+					$("tbody").empty();
+					//遍历arr，给tbody的每一行去追加数据
+					arr.forEach(function(item){
+						$(`
+						<tr>
+						<td>
+						<input type="checkbox" value=`+item.id+`>
+						</td>
+						<td>`+item.username+`</td>
+						<td>`+item.realname+`</td>
+						<td>`+item.gender+`</td>
+						<td>`+item.status+`</td>
+						<td>
+					  		<button id="btn_delete" type="button" class="btn form-group btn-danger ml-2 btn-sm">删除</button>
+					  	</td>
+						</tr>s
+						`).appendTo("tbody");
+					})
+				})
+			})
+		})
+		//为返回按钮绑定事件
+		$("#search_back").on("click",function(){
+			reloadService();
+		})
+	})
+	//关闭模态框
+	function close_service_modal(){
+		$("#service_modal").modal("hide");
+	}
+</script>
+<style>
+	.button{
+		float: right;
+		margin-top: 70px;
+		margin-right: 10px;
+	}
+	.col-md-1{
+		padding-left: 0px;
+	}
+	.form-group{
+		margin-bottom: 0px;
+	}
+	.layui-tab-content{
+		padding: 10px 0;
+	}
+	label{
+		line-height: 38px;
+	}
+	.col-2{
+		padding-left: 0px;
+	}
+	thead{
+		background-color: #1d2b36;
+		color: #fff;
+	}
+	#service_modal{
+		margin-top: 40px;
+	}
+	.modal-backdrop.show{
+		z-index: -1;
+	}
+	table{
+		text-align: center;
+	}
+</style>

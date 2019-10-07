@@ -1,0 +1,39 @@
+<div class="main">
+	<!-- 模块管理 -->
+	<!-- 标签页 -->
+	<div class="layui-tab">
+	  <ul class="layui-tab-title">
+	    <li class="layui-this">城市管理</li>
+	    <li>福利管理</li>
+	    <li>职位管理</li>
+	  </ul>
+	</div>
+	<div class="cont" id="cont">
+		
+	</div>
+</div>
+<script>
+	$(function(){
+		$('#cont').load('./pages/city.html')
+		$(".main").on({click:function(){
+			if($(this).text()=='城市管理'){
+				$('#cont').load('./pages/city.html')
+			}
+			if($(this).text()=='福利管理'){
+				$('#cont').load('./pages/fuli.html')
+			}
+			if($(this).text()=='职位管理'){
+				$('#cont').load('./pages/zhaopin.html')
+			}
+		}},'li')
+	})
+</script>
+<style>
+	.cont{
+		height: 100%;
+		/*background-color: red;*/
+	}
+	.layui-body .main{
+		padding:10px;
+	}
+</style>

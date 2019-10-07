@@ -1,0 +1,213 @@
+<div class="main">
+	<!-- 福利 -->
+	<div class="row" id="select">
+		<!-- <label class="col-4 text-right" for="input_job">选择工种:</label> -->
+		<!-- <div class="col"> -->
+			<select class="col-2 form-control" id="one">
+			<option class="selected">使用中</option>
+			<option>被冻结</option>
+			</select>
+			<button id = "deleted_welfare" type="button" class="btn bg-danger btn-sm ml-4">删除</button>
+			<button id = "add_welfare" type="button" class="btn bg-primary btn-sm ml-4">添加福利</button>
+			<!-- <button id = "revise_welfare" type="button" class="btn bg-primary btn-sm ml-4">修改</button> -->
+		<!-- </div> -->
+	</div>
+	<table id = "welfare_tbl" class="table table-hover table-light">
+		<thead style="background-color:#1d2b36;color: #fff ">
+			<tr>
+			  <th scope="col" style="width:100px;text-align: center; ">#</th>
+			  <th scope="col" style="text-align: left">福利名称</th>
+			  <th scope="col" style="width:300px;text-align: center;">状态</th>
+			  <th scope="col" style="width:300px;text-align: center;">操作</th>
+			  <!-- <th scope="col" style="width:100px;text-align: center;">修改</th> -->
+			</tr>
+		</thead>
+		<tbody id="welfare_tbl">
+		</tbody>
+	</table>
+	<!-- 模态框表单开始 -->
+	<div class="modal fade" id="welfare_modal" tabindex="-1">
+	  <div class="modal-dialog modal-lg">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="addLabel">添加或修改信息</h5>
+	        <button type="button" class="close" onclick="closeWelfare_modal()">
+	          <span>&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+			<form class="only" id="welfare_form">
+				<div class="row">
+					<div class="col-6">
+						<div class="row">
+							<label class="col-4 text-right" for="input_name">福利名称:</label>
+							<div class="col">
+								<input class="form-control" type="text" id="input_name" name="name" placeholder="">
+							</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="row">
+							<label class="col-4 text-right" for="input_status">状&nbsp;&nbsp;&nbsp;&nbsp;态:</label>
+							<div class="col">
+								<input class="form-control" type="text" id="input_status" name="status" placeholder="">
+							</div>
+		                </div>
+					</div>
+				</div>
+				 
+				<div class="row"  style="display:none">
+				<label class="col-4 text-right" for="input_id">id:</label>
+				<div class="col">
+					<input class="form-control" type="text" id="input_id" name="id" placeholder=" ">
+				</div>
+			</div>
+			</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" onclick="closeWelfare_modal()">取消</button>
+	        <button type="button" class="btn btn-primary" id="save_welfare">确定</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- 模态框表单结束 -->
+</div>
+<script>
+	$(function(){
+		var baseURL = "http://203.195.246.58:7777"; 
+		function reloadWelfare(){
+			var url = baseURL+"/Welfare/findAll";
+			$.get(url,function(response,result){
+				$("#welfare_tbl tbody").empty();
+				response.data.forEach(function(item){
+					if(item.status==="使用中"){
+						$(`
+						<tr>
+						<th scope="row" style="text-align: center; ">
+						<input type="checkbox" value="`+item.id+`">
+						</th>
+						<td>`+item.name+`</td>
+						<td class="text-success" style="text-align:center">`+item.status+`</td>
+						<td style="text-align:center">
+						<button id = "end" type="button" class="btn bg-warning btn-sm">冻结</button>
+						</td>
+						</tr>
+					`).appendTo("tbody");
+					}else if(item.status==="被冻结"){
+						$(`
+						<tr>
+						<th scope="row" style="width:100px;text-align: center; ">
+						<input type="checkbox" value="`+item.id+`">
+						</th>
+						<td>`+item.name+`</td>
+						<td class="text-warning" style="text-align:center;">`+item.status+`</td>
+						<td style="text-align:center">
+						<button id = "end" type="button" class="btn btn-success btn-sm">恢复</button>
+						</td>
+						</tr>
+					`).appendTo("tbody");
+					}
+				})
+			})
+		}
+		reloadWelfare();
+		//为删除按绑定事件
+		$("#deleted_welfare").on("click",function(){
+			// alert(1);
+			//获取要删除的id
+			var id = $("#welfare_tbl input:checkbox").filter(":checked").map(function(index,item){
+				return $(item).val();
+			}).toArray();
+			//和后台交互
+			// var url = baseURL+"/Welfare/deleteById";
+			var data =  "";
+			for(var key in id){
+				var id = id[key];
+				if(key==0){
+					data+="id="+id;
+				}else{
+					data+="&id="+id
+					console.log("data",data);
+				}
+			}
+			$.ajax({
+				url:baseURL+"/Welfare/deleteById",
+				method:"POST",
+				data:data,
+				success:function(result){
+					if(result.status===200){
+						alert("删除成功");
+						reloadWelfare();
+					}else{
+						alert(result.message);
+					}
+				}
+			})
+		})
+		//为添加按钮绑定事件
+		$("#add_welfare").on("click",function(){
+			// alert(1);
+			// 显示模态框
+			$("#welfare_modal").modal("show");
+		})
+		console.log("执行到为添加按钮绑定事件。。。。。")
+		//保存
+		$("#save_welfare").on("click",function(){
+			alert(1);
+			console.log("执行到保存开始。。。。。");
+			//获取数据
+			var id = $("input[name=id]").val();
+			console.log("id",id);
+			var name = $("input[name=name]").val();
+			var status = $("input[name=status]").val();
+			//和后台交互
+			var url = baseURL+"/Welfare/saveOrUpdate";
+			var data = {
+				id:id,
+				name:name,
+				status:status
+			}
+			console.log("data",data);
+			$.post(url,data,function(response,status){
+				reloadWelfare();
+				alert("save successfully");
+				closeWelfare_modal();
+			})
+		})
+		//为修改绑定事件
+		$("#welfare_tbl").on("click","button",function(){
+			// alert(1);
+			$("#welfare_modal").modal("show");
+			//获取数据
+			var id = $(this).parents("tr").children().eq(0).find("input").val();
+			var name = $(this).parents("tr").children().eq(1).text();
+			var status = $(this).parents("tr").children().eq(2).text();
+			//设置值
+			$("#welfare_form input[name=id]").val(id);
+			$("#welfare_form input[name=name]").val(name);
+			$("#welfare_form input[name=status]").val(status);
+		})
+	})
+function closeWelfare_modal(){
+	$("#welfare_modal").modal("hide");
+}
+</script>
+<style>
+	#select{
+		padding: 0;
+		margin:10px 2px;
+	}
+	label{
+	line-height: 38px;
+	}
+	.modal-backdrop.show{
+		z-index: -1;
+	}
+	#welfare_modal{
+		margin-top: 40px;
+	}
+	table{
+		text-align: center;
+	}
+</style>

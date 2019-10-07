@@ -1,0 +1,172 @@
+
+<div class="main">
+	<!-- 审核模块 -->
+	<!-- 标签页 -->
+	<div class="layui-tab">
+	  <ul class="layui-tab-title">
+	    <li class="layui-this">商家审核</li>
+	    <li>招聘审核</li>
+	  </ul>
+	  <div class="layui-tab-content">
+	    <div class="layui-tab-item layui-show">
+	    <div class="row">
+			<div class="form-group col-md-2">
+		      <!-- <label for="inputState">State</label> -->
+		      <select id="one" class="form-control">
+		        <option selected>职位类型1</option>
+		        <!-- <option>...</option> -->
+		      </select>
+		    </div>
+	    </div>
+	    <table id = "Business_tbl" class="table table-hover table-light">
+		<thead>
+			<tr>
+			  <th scope="col">#</th>
+			  <th scope="col">企业名称</th>
+			  <th scope="col">联系人</th> 
+			  <th scope="col">联系方式</th>
+			  <th scope="col">行业</th>
+			  <th scope="col">所在地</th>
+			  <th scope="col">公司规模</th>
+			  <th scope="col">详情</th>
+			  <th scope="col">操作</th>
+			</tr>
+		</thead>
+		<tbody id="Business_tbl">
+		</tbody>
+		</table>
+	    <!-- 内容1 -->
+	    </div>
+	    <div class="layui-tab-item">
+		 <div class="row">
+			<div class="form-group col-md-2">
+		      <!-- <label for="inputState">State</label> -->
+		      <select id="two" class="form-control">
+		        <option selected>职位类型2</option>
+		        <!-- <option>...</option> -->
+		      </select>
+		    </div>
+	    </div>	
+	    <table id = "employment_tbl" class="table table-hover table-light">
+		<thead>
+			<tr>
+			  <th scope="col">#</th>
+			  <th scope="col">招聘标题</th>
+			  <th scope="col">发布人</th> 
+			  <th scope="col">联系方式</th>
+			  <th scope="col">职位</th>
+			  <th scope="col">发布时间</th>
+			  <th scope="col">详情</th>
+			  <th scope="col">操作</th>
+			</tr>
+		</thead>
+		<tbody id="employment_tbl">
+		</tbody>
+		</table>     
+	    <!-- 内容2 -->
+	    </div>
+	  </div>
+	</div>
+</div>
+<script>
+	$(function(){
+		var baseURL = "http://203.195.246.58:7777";
+		//重载数据
+		function reload_1(){
+			$("#Business_tbl tbody").empty();
+			$.get(baseURL+'/Business/findAll',function(response,status){
+				response.data.forEach(function(item,index){
+					if(item.status==="审核通过"){
+						$(`
+						<tr>
+					  	<td><input type="checkbox" value=`+item.id+`></td>
+					  	<td>`+item.name+`</td>
+					  	<td>`+item.contactName+`</td>
+					  	<td>`+item.contactPhone+`</td>
+					  	<td>`+item.industry+`</td>
+					  	<td>`+item.location+`</td>
+					  	<td>`+item.scale+`</td>
+					  	<td><a href="#" class="details">详情</a></td>
+					  	<td class="text-success">
+					  		审核通过
+					  	</td>
+					  </tr>
+					`).appendTo('#Business_tbl');
+					}else if(item.status==="拒绝"){
+						$(`
+						<tr>
+					  	<td><input type="checkbox" value=`+item.id+`></td>
+					  	<td>`+item.name+`</td>
+					  	<td>`+item.contactName+`</td>
+					  	<td>`+item.contactPhone+`</td>
+					  	<td>`+item.industry+`</td>
+					  	<td>`+item.location+`</td>
+					  	<td>`+item.scale+`</td>
+					  	<td><a href="#" class="details">详情</a></td>
+					  	<td class="text-danger">
+					  		拒绝
+					  	</td>
+					  </tr>
+					`).appendTo('#Business_tbl');
+					}else if(item.status==="待审核"){
+						$(`
+						<tr>
+					  	<td><input type="checkbox" value=`+item.id+`></td>
+					  	<td>`+item.name+`</td>
+					  	<td>`+item.contactName+`</td>
+					  	<td>`+item.contactPhone+`</td>
+					  	<td>`+item.industry+`</td>
+					  	<td>`+item.location+`</td>
+					  	<td>`+item.scale+`</td>
+					  	<td><a href="#" class="details">详情</a></td>
+					  	<td>
+					  		<button id="btn_go" type="button" class="btn btn-success btn-sm">通过</button> 
+					  		<button id="btn_go" type="button" class="btn btn-danger btn-sm">拒绝</button> 
+					  	</td>
+					  </tr>
+					`).appendTo('#Business_tbl');
+					}
+				})
+			})
+		}
+		reload_1();
+		function reload_2(){
+			$("#employment_tbl tbody").empty();
+			$.get(baseURL+"/Employment/findAll",function(response,status){
+				response.data.forEach(function(item,index){
+					$(`
+						<tr>
+					      <th scope="row">
+					      	<input type="checkbox" value="`+item.id+`"/>
+					      </th>
+					      	<td>`+item.title+`</td>
+					        <td>`+item.contactName+`</td>
+					        <td>`+item.contactPhone+`</td>
+					        <td>`+item.job+`</td>
+					        <td>`+item.publishTime+`</td>
+					        <td><a href="#" class="dec">详情</a></td>
+					        <td>
+							<a class="btn_del" href="javascript:void(0)">
+								<span class="btn_del fa fa-trash text-danger"></span>
+							</a>
+							<a class="btn_upd" href="javascript:void(0)">
+								<span class="btn_upd fa fa-edit text-primary ml-3"></span>
+							</a>
+						    </td>
+					    </tr>
+					`).appendTo("#employment_tbl");
+				})
+			})
+		}
+		reload_2();
+	})
+</script>
+<style>
+	thead{
+		background-color: #1d2b36;
+		color: #fff;
+	}
+	table{
+		text-align: center;
+	}
+</style>

@@ -1,0 +1,121 @@
+<!-- <div class="main">
+        这是首页
+</div> -->
+<div class="main">
+    <div class="row top_nav">
+       <div class="one col shadow rounded">
+       		<div id="employ" class="text-danger text-center"></div>
+       		
+       		<div class="pic text-center"><span class="fa fa-bell text-danger "></span></div>
+       		<div class="text text-center">
+       			<span>简历</span>
+       		</div>
+       </div>
+       <div  class="col shadow rounded">
+       		<div class="text-success text-center" id="custemer"></div>
+       		
+       		<div class="pic text-center"><span class="fa fa-user-o text-success "></span></div>
+       		<div class="text text-center">
+       			<span >用户</span>
+       		</div>
+       </div>
+       <div class="col shadow rounded">
+       		<div id="business" class="text-warning text-center"></div>
+       		
+       		<div class="pic text-center"><span class="fa fa-frown-o text-warning"></span></div>
+       		<div class="text text-center">
+       			<span >商家</span>
+       		</div>
+       </div>
+       <div class="col shadow rounded">
+       		<div id="total" class=" text-primary text-center">200</div>
+       		
+       		<div class="pic text-center"><span class="fa fa-hourglass text-primary"></span></div>
+       		<div class="text text-center">
+       			<span>浏览</span>
+       		</div>
+       </div>
+    </div>
+     <div >
+     	 <div class="mb-2">
+ 	 	 <button type="button" id="btn_business" class="btn btn-primary" style="margin-left: 5px " data-target="#exampleModal" data-toggle="modal">
+		  商家审核
+		 </button>
+		  <button type="button" id="btn_zhaoping" class="btn btn-primary"  data-target="#exampleModal" data-toggle="modal">
+		 招聘审核
+		 </button>
+     	 </div>
+	    <div class="cont" id="cont">
+	    	
+	    </div>
+    </div>
+</div>
+<style>
+	.top_nav>div{
+		height: 110px;
+		/*background: #ededed;*/
+		margin:30px;
+	}
+	.top_nav>div .text span{
+		font-size: 18px;
+	}
+	#employ,#custemer,#business,#total{
+		width: 50%;
+		height: 50%;
+		/*background: pink;*/
+		float: left;
+		font-size: 28px;
+		margin-top: 20px;
+		/*margin:auto;*/
+	}
+	.text{
+		width: 50%;
+		height: 50%;
+		/*background:teal;*/
+		float: left;
+		/*margin:auto;*/
+	}
+	.pic{
+		width: 50%;
+		height: 100%;
+		float:right;
+		margin:auto;
+		margin-top: 15px;
+		font-size: 50px;  
+		/*background: #ededed;*/
+	}
+</style>
+<script>
+	$(function(){
+		$("#cont").load("./pages/merchants_checked.html")
+		$(".main").on("click","button",function(){
+			// console.log(this.text())
+			if(this.id=="btn_business"){
+				$("#cont").load("./pages/merchants_checked.html");
+			}
+			else if(this.id=="btn_zhaoping"){
+				$("#cont").load("./pages/invite_checked.html");
+		}
+	})
+	// 查询商家数
+	var baseURL="http://203.195.246.58:7777";
+	var url=baseURL+"/Business/findAll";
+	var count;
+	$.get(url,function(response){
+		count=response.data.length;
+		$("#business").text(count);
+	})
+	// 查询简历数
+	var url1=baseURL+"/Jobhunter/findAll";
+	var count2
+	$.get(url1,function(response){
+		count2=response.data.length;
+		$("#employ").text(count2);
+	})
+	console.log(count2);
+	var url2 = baseURL +"/CustomerService/findAll";
+	$.get(url2,function(response){
+		$("#custemer").text(response.data.length);
+	})
+})
+</script>

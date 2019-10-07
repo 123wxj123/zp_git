@@ -1,0 +1,432 @@
+﻿<div class="main">
+	<!-- 商家管理 -->
+	    <!-- 页面表单开始 -->
+		<form id="Business_form" >
+			<div class="row" style="margin-top: 10px; ">
+				<div class="form-group col-2">
+			      <!-- <label for="inputState">State</label> -->
+			      <select id="one" class="form-control">
+			        <option selected>所在地</option>
+			        <!-- <option>...</option> -->
+			      </select>
+			    </div>
+			    <div class="form-group col-2">
+			      <!-- <label for="inputState">State</label> -->
+			      <select id="two" class="form-control">
+			        <option selected>行业</option>
+			        <!-- <option>...</option> -->
+			      </select>
+			    </div>
+			    <div class="form-group col-2">
+			      <!-- <label for="inputState">State</label> -->
+			      <select id="three" class="form-control">
+			        <option selected>规模</option>
+			        <!-- <option>...</option> -->
+			      </select>
+			    </div>
+			    <button id="search_back" type="button" class="btn form-group btn-primary ml-2">返回</button>
+		    </div>
+		</form>
+		<!-- 页面表单结束 -->
+		<!-- 模态框表单开始 -->
+		<div class="modal fade" id="revise_modal" tabindex="-1">
+		  <div class="modal-dialog modal-lg">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="addLabel">修改商家信息</h5>
+		        <button type="button" class="close" onclick="closeRevise_modal()">
+		          <span>&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+				<form class="only" id="revise_form">
+					<div class="row">
+						<div class="col-6">
+							<div class="row">
+								<label class="col-4 text-right" for="input_name">公司名称:</label>
+								<div class="col">
+									<input class="form-control" type="text" id="input_name" name="name" placeholder="">
+								</div>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="row">
+								<label class="col-4 text-right" for="input_industry">所属行业:</label>
+								<div class="col">
+									<input class="form-control" type="text" id="input_industry" name="industry" placeholder="">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-6">
+							<div class="row">
+								<label class="col-4 text-right" for="input_location">所在城市:</label>
+								<div class="col">
+									<input class="form-control" type="text" id="input_location" name="location" placeholder="">
+									<!-- <select class="form-control">
+									</select> -->
+								</div>
+			                </div>
+						</div>
+						<div class="col-6">
+							<div class="row">
+								<label class="col-4 text-right" for="input_scale">公司规模:</label>
+								<div class="col">
+									<input class="form-control" type="text" id="input_scale" name="scale" placeholder="">
+									<!-- <select class="form-control">
+									</select> -->
+								</div>
+			                </div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-6">
+							<div class="row">
+								<label class="col-4 text-right" for="input_contactName">联系人:</label>
+								<div class="col">
+									<input class="form-control" type="text" id="input_contactName" name="contactName" placeholder=" ">
+								</div>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="row">
+								<label class="col-4 text-right" for="input_contactPhone">联系方式:</label>
+								<div class="col">
+									<input class="form-control" type="text" id="input_contactPhone" name="contactPhone" placeholder=" ">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<label class="col-2 text-right" for="input_description">公司简介:</label>
+						<div class="col">
+							<textarea id="input_description" name="description" class="form-control">
+							</textarea>
+						</div>
+					</div>
+				<div class="row"  style="display:none">
+					<label class="col-4 text-right" for="input_id">id:</label>
+					<div class="col">
+						<input class="form-control" type="text" id="input_id" name="id" placeholder=" ">
+					</div>
+				</div>
+				</form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" onclick="closeRevise_modal()">取消</button>
+		        <button id="btn_certainAddCustomer" type="button" class="btn btn-primary" onclick="submitRevise_modal()">确定</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- 模态框表单结束 -->
+		<!-- 详情模态框开始 -->
+		<div class="modal fade" id="details_modal" tabindex="-1">
+		  <div class="modal-dialog modal-lg">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="addLabel">商家详细信息</h5>
+		        <button type="button" class="close" onclick="closeDetails_modal()">
+		          <span>&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+				  <div class="row">
+					<label class="col-2 text-right" for="input_description">公司简介:</label>
+					<div class="col">
+						<textarea id="input_description" name="description" class="form-control">
+						</textarea>
+					</div>
+					
+				  </div>
+				  <div class="row img">
+						<img src="./images/1.jpg" alt="">
+				  </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" onclick="closeDetails_modal()">取消</button>
+		        <button id="btn_certainAddCustomer" type="button" class="btn btn-primary" onclick="submitRevise_modal()">确定</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- 详情模态框结束 -->
+		<table id = "Business_tbl" class="table table-hover table-light">
+		<thead>
+			<tr>
+			  <th scope="col">#</th>
+			  <th scope="col">企业名称</th>
+			  <th scope="col">联系人</th> 
+			  <th scope="col">联系方式</th>
+			  <th scope="col">行业</th>
+			  <th scope="col">所在地</th>
+			  <th scope="col">公司规模</th>
+			  <th scope="col">详情</th>
+			  <th scope="col">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+		</table>
+</div>
+<script>
+	var baseURL = "http://203.195.246.58:7777";
+	$(function(){
+		var data;
+		// 监听select
+		$('#one').change(function(){
+			var val = $(this).val()
+			// console.log(val)
+			var obj = {
+				location:val
+			}
+			$("#Business_tbl tbody").empty();
+			$.get(baseURL+'/Business/findByLocation',obj,function(res){
+				data = res.data
+				loadOption()
+				data.forEach(function(item,index){
+					$(`
+					  <tr>
+					  	<td><input type="checkbox" value=`+item.id+`></td>
+					  	<td>`+item.name+`</td>
+					  	<td>`+item.contactName+`</td>
+					  	<td>`+item.contactPhone+`</td>
+					  	<td>`+item.industry+`</td>
+					  	<td>`+item.location+`</td>
+					  	<td>`+item.scale+`</td>
+					  	<td><a href="#" class="dec">详情</a></td>
+					  	<td>
+					  		<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+					  		<i class="fa fa-trash-o" aria-hidden="true"></i>
+					  	</td>
+					  </tr>
+					`).appendTo('tbody')
+				})
+			})
+		})
+		$('#two').change(function(){
+			var val = $(this).val()
+			var obj = {
+				industry:val
+			}
+			$("#Business_tbl tbody").empty();
+			$.get(baseURL+'/Business/findByIndustry',obj,function(res){
+				data = res.data
+				loadOption()
+				res.data.forEach(function(item,index){
+					$(`
+						<tr>
+					  	<td><input type="checkbox" value=`+item.id+`></td>
+					  	<td>`+item.name+`</td>
+					  	<td>`+item.contactName+`</td>
+					  	<td>`+item.contactPhone+`</td>
+					  	<td>`+item.industry+`</td>
+					  	<td>`+item.location+`</td>
+					  	<td>`+item.scale+`</td>
+					  	<td><a href="#" class="dec">详情</a></td>
+					  	<td>
+					  		<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+					  		<i class="fa fa-trash-o" aria-hidden="true"></i>
+					  	</td>
+					  </tr>
+					`).appendTo('tbody')
+				})
+			})
+		})
+		$('#three').change(function(){
+			var val = $(this).val()
+			var obj = {
+				scale:val
+			}
+			$("#Business_tbl tbody").empty();
+			$.get(baseURL+'/Business/findByScale',obj,function(res){
+				data = res.data
+				loadOption()
+				res.data.forEach(function(item,index){
+					$(`
+					  <tr>
+					  	<td><input type="checkbox" value=`+item.id+`></td>
+					  	<td>`+item.name+`</td>
+					  	<td>`+item.contactName+`</td>
+					  	<td>`+item.contactPhone+`</td>
+					  	<td>`+item.industry+`</td>
+					  	<td>`+item.location+`</td>
+					  	<td>`+item.scale+`</td>
+					  	<td><a href="#" class="details">详情</a></td>
+					  	<td>
+					  		<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+					  		<i class="fa fa-trash-o" aria-hidden="true"></i>
+					  	</td>
+					  </tr>
+					`).appendTo('tbody')
+				});
+			});
+		});
+		loadBussiness()
+		//修改和删除绑定事件
+		$("#Business_tbl").on("click","a",function(event){
+			switch(this.className){
+				case "btn_del":
+					//获取数据
+					var id = $(this).parents("tr").children().find("input").val();
+					//和后台交互
+					var url = baseURL+"/Business/deleteById";
+					var data = {
+						id:id
+					}
+					$.post(url,data,function(result){
+						if(result.status ===200){
+							alert("success");
+							loadBussiness();
+						}else{
+							alert(result.message);
+						}
+					})
+				break;
+				case "btn_upd":
+					// alert(1);
+					$("#revise_modal").modal("show");
+					//获取数据
+					var id = $(this).parents("tr").children().eq(0).find("input").val();
+					console.log("id",id);
+					var name = $(this).parents("tr").children().eq(1).text();
+					console.log("name",name);
+					var contactName = $(this).parents("tr").children().eq(2).text();
+					console.log("contactName",contactName);
+					var contactPhone = $(this).parents("tr").children().eq(3).text();
+					console.log("contactPhone",contactPhone)
+					var industry = $(this).parents("tr").children().eq(4).text();
+					var location = $(this).parents("tr").children().eq(5).text();
+					var scale = $(this).parents("tr").children().eq(6).text();
+					console.log(name);
+					//设置值
+					$("#revise_form input[name=id]").val(id);
+					$("#revise_form input[name=name]").val(name);
+					$("#revise_form input[name=contactName]").val(contactName);
+					$("#revise_form input[name=contactPhone]").val(contactPhone);
+					$("#revise_form input[name=industry]").val(industry);
+					$("#revise_form input[name=location]").val(location);
+					$("#revise_form input[name=scale]").val(scale);
+				break;
+				case "details":
+					// alert(1);
+					$("#details_modal").modal("show");
+				break;
+			}
+		});
+		//为返回按钮绑定事件
+		$("#search_back").on("click",function(){
+			// alert(1);
+			loadBussiness();
+		})
+	});
+	// 加载页面option
+	function loadOption(){
+		data.forEach(function(item,index){
+			$('<option value='+item.location+'>'+item.location+'</option>').appendTo($('#one'))
+			$('<option value='+item.industry+'>'+item.industry+'</option>').appendTo($('#two'))
+			$('<option value='+item.scale+'>'+item.scale+'</option>').appendTo($('#three'))
+		})
+	}
+    // 关闭模态框
+	function closeRevise_modal(){
+		$("#revise_modal").modal("hide");
+	}
+	function closeDetails_modal(){
+		$("#details_modal").modal("hide");
+	}
+	//为提交按钮绑定
+	function submitRevise_modal(){
+		// alert(1);
+		//获取数据
+		var id = $("input[name=id]").val();
+		var name = $("#revise_form input[name=name]").val();
+		console.log("name",name);
+		var contactName = $("#revise_form input[name=contactName]").val();
+		var contactPhone = $("#revise_form input[name=contactPhone]").val();
+		var industry = $("#revise_form input[name=industry]").val();
+		var location = $("#revise_form input[name=location]").val();
+		var scale = $("#revise_form input[name=scale]").val();
+		//和后台交互
+		var url = baseURL+"/Business/saveOrUpdate";
+		console.log("id",id);
+		var data = {
+			id:id,
+			name:name,
+			contactName:contactName,
+			contactPhone:contactPhone,
+			industry:industry,
+			location:location,
+			scale:scale
+			}
+		$.post(url,data,function(result){
+			if(result.status===200){
+				//提交完成后关闭莫泰框
+				closeRevise_modal();
+				//重新加载数据
+				loadBussiness();
+				alert("success");
+			}else{
+				alert(result.message);
+			}
+		})
+	}
+	//数据重载
+	function loadBussiness(){
+		//清空tbody
+		$("#Business_tbl tbody").empty();
+		$.get(baseURL+'/Business/findAll',function(response){
+			data = response.data
+			// console.log(data)
+			loadOption()
+			// console.log(data);
+			response.data.forEach(function(item,index){
+				$(`
+					<tr>
+				  	<td><input type="checkbox" value=`+item.id+`></td>
+				  	<td>`+item.name+`</td>
+				  	<td>`+item.contactName+`</td>
+				  	<td>`+item.contactPhone+`</td>
+				  	<td>`+item.industry+`</td>
+				  	<td>`+item.location+`</td>
+				  	<td>`+item.scale+`</td>
+				  	<td><a href="#" class="details">详情</a></td>
+				  	<td>
+				  		<a class="btn_del" href="javascript:void(0)">
+						<span class="btn_del fa fa-trash text-danger"></span>
+						</a>
+						<a class="btn_upd" href="javascript:void(0)">
+						<span class="btn_upd fa fa-edit text-primary ml-3"></span>
+						</a>
+				  	</td>
+				  </tr>
+				`).appendTo('tbody')
+			})
+		})
+	}
+</script>
+<style>
+	table{
+		text-align: center;
+	}
+	#revise_modal,#details_modal{
+		margin-top: 40px;
+	}
+	label{
+	line-height: 38px;
+	}
+	.modal-backdrop.show{
+		z-index: -1;
+	}
+	.img{
+		width: 400px;
+		height: 300px;
+		margin:0 auto;
+		margin-top: 10px;
+	}
+	thead{
+		background-color: #1d2b36;
+		color: #fff;
+	}
+</style>

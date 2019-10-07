@@ -1,0 +1,178 @@
+
+<div class="main">
+	<!-- 求职者 -->
+	<!-- 标签页开始 -->
+	<div class="layui-tab">
+		<ul class="layui-tab-title">
+			<li class="layui-this">求职列表</li>
+		</ul>
+	</div>
+	<div class="layui-tab-content">
+		<div class="layui-tab-item layui-show">
+			<div class="row">
+				<button id="btn_wait" type="button" class="btn btn-primary" style="margin-right:10px; margin-left: 5px ">待联系</button>
+				<button id="btn_moment" type="button" class="btn btn-outline-primary" style="margin-right:10px;">稍后联系</button>
+				<button id="btn_end" type="button" class="btn btn-outline-primary">已联系</button>
+			</div>
+		</div>
+	</div>
+	<!-- 标签页结束 -->
+	<table id = "apply_tbl" class="table table-hover table-light">
+	  <thead>
+	  	<tr>
+	  	  <th scope="col">#</th>
+	  	  <th scope="col">求职人</th>
+	  	  <th scope="col">联系方式</th>
+	  	  <th scope="col">求职岗位</th>
+	  	  <th scope="col">简历</th>
+	  	  <th scope="col">申请时间</th>
+	  	</tr>
+	  </thead>
+	  <tbody>
+	  </tbody>
+	  </table>
+	<!-- 模态框表单开始 -->
+	<div class="modal fade" id="apply_modal" tabindex="-1">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <!-- <h5 class="modal-title" id="addLabel">修改商家信息</h5> -->
+	        <h5 id="realname" style="margin-right: 10px; "></h5>
+	        <a href="javascript:void(0)" style="text-decoration: none; ">
+	         <!-- <span class="fa fa-frown-o text-info"></span> -->
+	         <span class="fa fa-mobile text-info fa-lg"></span>
+	         手机认证
+	         </a>
+	        <button type="button" class="close" onclick="closeApply_modal()">
+	         <span>&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      	<div class="row" style="margin-bottom: 10px ">
+	      		<div class="col-5 text-right">
+	      			学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历:
+	      		</div>
+	      		<div class="col"  id="education"></div>
+	      	</div>
+	      	<div class="row" style="margin-bottom: 10px ">
+	      		<div class="col-5 text-right">
+	      			性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:
+	      		</div>
+	      		<div class="col"  id="gender"></div>
+	      	</div>
+	      	<div class="row" style="margin-bottom: 10px ">
+	      		<div class="col-5 text-right">
+	      			出生日期:
+	      		</div>
+	      		<div class="col"  id="birth"></div>
+	      	</div>
+	      	<div class="row" style="margin-bottom: 10px ">
+	      		<div class="col-5 text-right">
+	      			工作经验:
+	      		</div>
+	      		<div class="col"  id="workTime"></div>
+	      	</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" onclick="closeApply_modal()">取消</button>
+	        <button id="btn_certainAddCustomer" type="button" class="btn btn-primary" onclick="submitRevise_modal()">确定</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- 模态框表单结束 -->
+</div>
+<script>
+	$(function(){
+		var baseURL = "http://203.195.246.58:7777";
+		//重载数据
+		function reloadApply(){
+			$("#apply_tbl tbody").empty();
+			var url = baseURL+"/EmploymentJobhunter/findAllWithJobhAndEmpl";
+			$.get(url,function(response){
+				response.data.forEach(function(item,index){
+					$(`
+						<tr>
+					  	<td><input type="checkbox" value=`+item.id+`></td>
+					  	<td>`+item.jobhunter.realname+`</td>
+					  	<td>`+item.jobhunter.telephone+`</td>
+					  	<td>`+item.employment.job+`</td>
+					  	<td><a href="javascript:void(0)">查看</a></td>
+					  	<td>`+dateParse(item.askTime)+`</td>
+					`).appendTo("tbody");
+				})
+			})
+		}
+		reloadApply();
+		//为a标签绑定事件
+		$("#apply_tbl tbody").on("click","a",function(){
+			// alert(1);
+			$("#apply_modal").modal("show");
+			var id = $(this).parents("tr").children().eq(0).find("input").val();
+			console.log("id1",id);
+			var url_1 = baseURL+"/EmploymentJobhunter/findAllWithJobhAndEmpl";
+			$.get(url_1,function(response){
+				response.data.forEach(function(item){
+					console.log(item);
+					if(item.id==id){
+						// console.log("id2",id);
+						var realname = item.jobhunter.realname;
+						var gender = item.jobhunter.gender;
+						// console.log("gender",gender);
+						var birth = dateParse(item.jobhunter.birth);
+						// console.log("birth",birth);
+						var education = item.jobhunter.education;
+						// console.log("education",education);
+						var workTime = item.jobhunter.workTime;
+						// console.log("workTime",workTime);
+						$("#realname").text(realname);
+						$("#education").text(education);
+						$("#gender").text(gender);
+						$("#workTime").text(workTime);
+						$("#birth").text(dateParse(birth));
+					}
+				})
+			})
+		})
+		//封装时间
+		var dateParse=(dataString)=>{
+		  if(dataString){
+		    let date = new Date(dataString);
+		    let Y = date.getFullYear() + '-';
+		    let M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+		    let D = (date.getDate()< 10 ? '0'+date.getDate() : date.getDate())+' ';
+		    let h = (date.getHours()< 10 ? '0'+date.getHours() : date.getHours())+ ':';
+		    let m = (date.getMinutes()< 10 ? '0'+date.getMinutes() : date.getMinutes())+ ':';
+		    let s = (date.getSeconds()< 10 ? '0'+date.getSeconds() : date.getSeconds());
+		    return Y+M+D+h+m+s;
+		  }else{
+		    return '';
+		  }
+		}
+	})
+//关闭模态框
+function closeApply_modal(){
+	$("#apply_modal").modal("hide");
+}
+</script>
+<style>
+	thead{
+		background-color: #1d2b36;
+		color: #fff;
+	}
+	table{
+		text-align: center;
+	}
+	#apply_modal{
+		margin-top: 40px;
+	}
+	.modal-backdrop.show{
+		z-index: -1;
+	}
+	label{
+		line-height: 38px;
+	}
+	table{
+		text-align: center;
+	}
+</style>

@@ -1,0 +1,571 @@
+<div class="main">
+	<!-- 招聘管理 -->
+	<div class="row" id="btn_attach">
+		<div class="col" style="padding-right:0px">
+			<input class="form-control" type="text" id="input_job" name="job" style="border-radius: 5px 0 0 5px " placeholder="Please enter what you want">
+		</div>
+		<button id="search_job" type="button" class="btn btn-outline-primary" style="border-radius: 0 5px 5px 0; border-left: none; ">查询</button>
+		<button id="search_back" type="button" class="btn btn-primary ml-2">返回</button>
+		<button id="btn_put_job" type="button" class="btn btn-primary ml-2">发布职位</button>
+		<!-- <label class="col-1 text-center" for="input_title" style="width:30px">查询</label> -->
+	</div>
+	<!-- 标签页 -->
+	<div class="layui-tab">
+	  <ul class="layui-tab-title">
+	    <li class="layui-this">招聘中</li>
+	    <li>招聘完结</li>
+	  </ul>
+	  <div class="layui-tab-content">
+	    <div class="layui-tab-item layui-show">
+	    <div class="row">
+			<div class="form-group col-md-2">
+		      <!-- <label for="inputState">State</label> -->
+		      <select id="one" class="form-control">
+		        <option selected>职位类型1</option>
+		        <!-- <option>...</option> -->
+		      </select>
+		    </div>
+	    </div>
+	    <table id = "employment_tbl" class="table table-hover table-light">
+		<thead>
+			<tr>
+			  <th scope="col">#</th>
+			  <th scope="col">招聘标题</th>
+			  <th scope="col">发布人</th> 
+			  <th scope="col">联系方式</th>
+			  <th scope="col">职位</th>
+			  <th scope="col">发布时间</th>
+			  <th scope="col">详情</th>
+			  <th scope="col">操作</th>
+			</tr>
+		</thead>
+		<tbody id="employmenting_tbl">
+		</tbody>
+		</table>
+	    <!-- 内容1 -->
+	    </div>
+	    <div class="layui-tab-item">
+		 <div class="row">
+			<div class="form-group col-md-2">
+		      <!-- <label for="inputState">State</label> -->
+		      <select id="two" class="form-control">
+		        <option selected>职位类型2</option>
+		        <!-- <option>...</option> -->
+		      </select>
+		    </div>
+	    </div>	
+	    <table id = "employment_tbl" class="table table-hover table-light">
+		<thead>
+			<tr>
+			  <th scope="col">#</th>
+			  <th scope="col">招聘标题</th>
+			  <th scope="col">发布人</th> 
+			  <th scope="col">联系方式</th>
+			  <th scope="col">职位</th>
+			  <th scope="col">发布时间</th>
+			  <th scope="col">详情</th>
+			  <th scope="col">操作</th>
+			</tr>
+		</thead>
+		<tbody id="employmented_tbl">
+		</tbody>
+		</table>     
+	    <!-- 内容2 -->
+	    </div>
+	  </div>
+	</div>
+	<!-- 发布职位的模态框开始 -->
+	<div class="modal fade" id="put_job_modal" tabindex="-1">
+		  <div class="modal-dialog modal-lg">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="addLabel">发布职位</h5>
+		        <button type="button" class="close" onclick="closeJob_modal()">
+		          <span>&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+				<form class="only" id="put_job_form">
+					<div class="row" style="padding:10px">
+						<div class="col-6">
+							<div class="row">
+								<label class="col-4 text-right" for="input_title">兼职名称:</label>
+								<div class="col">
+									<input class="form-control" type="text" id="input_title" name="title" placeholder="">
+								</div>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="row">
+								<label class="col-4 text-right" for="input_num">招聘人数:</label>
+								<div class="col">
+									<input class="form-control" type="text" id="input_num" name="num placeholder="">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row" style="padding:10px">
+						<div class="col-6">
+							<div class="row">
+								<label class="col-4 text-right" for="input_job">选择工种:</label>
+								<div class="col">
+									<!-- <input class="form-control" type="text" id="input_job" name="job" placeholder=""> -->
+									<select class="form-control"  id="three">
+									</select>
+								</div>
+			                </div>
+						</div>
+						<div class="col-6">
+							<div class="row">
+								<label class="col-4 text-right" for="input_businessId">招聘公司:</label>
+								<div class="col">
+									<!-- <input class="form-control" type="text" id="input_businessId" name="businessId" placeholder=""> -->
+									<select class="form-control" id="four">
+
+									</select>
+								</div>
+			                </div>
+						</div>
+					</div>
+					<div class="row" style="padding:10px">
+						<div class="col-6">
+							<div class="row">
+								<label class="col-4 text-right" for="input_salary">薪资水平:</label>
+								<div class="col">
+									<input class="form-control" type="text" id="input_salary" name="salary" placeholder=" ">
+								</div>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="row">
+								<label class="col-4 text-right" for="input_welfare">职位标签:</label>
+								<div class="col">
+									<input class="form-control" type="text" id="input_welfare" name="welfare" placeholder=" ">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row" style="padding:10px">
+						<label class="col-2 text-right" for="input_status">职位状态:</label>
+						<div class="col-4">
+							<input class="form-control" type="text" id="input_status" name="status" placeholder=" ">
+						</div>
+					</div>
+					<div class="row" style="padding:10px">
+						<label class="col-2 text-right" for="input_description">职位描述:</label>
+						<div class="col">
+							<textarea id="input_description" name="description" class="form-control">
+							</textarea>
+						</div>
+					</div>
+				</form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" onclick="closeJob_modal()">取消</button>
+		        <button type="button" class="btn btn-primary" id = "save">确定</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	<!-- 发布职位的模态框结束 -->
+	<!-- 修改模态框开始 -->
+	<div class="modal fade" id="revise_job_modal" tabindex="-1">
+		  <div class="modal-dialog modal-lg">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="addLabel">发布职位</h5>
+		        <button type="button" class="close" onclick="closeR_modal()">
+		          <span>&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+				<form class="only" id="revise_job_form">
+					<div class="row" style="padding:10px">
+						<div class="col-6">
+							<div class="row">
+								<label class="col-4 text-right" for="input_title">招聘标题:</label>
+								<div class="col">
+									<input class="form-control" type="text" id="input_title" name="title" placeholder="">
+								</div>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="row">
+								<label class="col-4 text-right" for="input_contactName">发布人:</label>
+								<div class="col">
+									<input class="form-control" type="text" id="input_contactName" name="contactName" placeholder="">
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row" style="padding:10px">
+						<div class="col-6">
+							<div class="row">
+								<label class="col-4 text-right" for="input_contactPhone">联系方式:</label>
+								<div class="col">
+									<input class="form-control" type="text" id="input_contactPhone" name="contactPhone" placeholder=" ">
+								</div>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="row">
+								<label class="col-4 text-right" for="input_publishTime">发布时间:</label>
+								<div class="col">
+									<input class="form-control" type="text" id="input_publishTime" name="publishTime" placeholder=" ">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row" style="padding:10px">
+						<div class="col-6">
+							<div class="row">
+								<label class="col-4 text-right" for="input_job">选择工种:</label>
+								<div class="col">
+									<!-- <input class="form-control" type="text" id="input_job" name="job" placeholder=""> -->
+									<select class="form-control"  id="job">
+									</select>
+								</div>
+			                </div>
+						</div>
+						<div class="col-6">
+							<div class="row">
+								<label class="col-4 text-right" for="input_job">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态:</label>
+								<div class="col">
+									<!-- <input class="form-control" type="text" id="input_job" name="job" placeholder=""> -->
+									<select class="form-control"  id="status">
+									<option value="">招聘中</option>
+									<option value="">招聘完结</option>
+									</select>
+								</div>
+			                </div>
+						</div>
+					</div>
+					<div class="row" style="padding:10px">
+						<label class="col-2 text-right" for="input_description">职位描述:</label>
+						<div class="col">
+							<textarea id="input_description" name="description" class="form-control">
+							</textarea>
+						</div>
+					</div>
+					<div class="row"  style="display:none">
+					<label class="col-4 text-right" for="input_id">id:</label>
+					<div class="col">
+						<input class="form-control" type="text" id="input_id" name="id" placeholder=" ">
+					</div>
+				</form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" onclick="closeR_modal()">取消</button>
+		        <button type="button" class="btn btn-primary" id = "save_one">确定</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	<!-- 修改模态框结束 -->
+</div>
+<script>
+var baseURL = "http://203.195.246.58:7777";
+$(function(){
+	//发布职位按钮绑定事件
+	$("#btn_put_job").on("click",function(){
+		// alert(1);
+		$("#put_job_modal").modal("show");
+	});
+	//发布职位保存按钮
+	$("#save").on("click",function(){
+		//获取数据
+		var title = $("input[name=title]").val();
+		var num = $("input[name=num]").val();
+		var job = $("input[name=job]").val();
+		var businessId = $("input[name=businessId]").val();
+		var salary = $("input[name=salary]").val();
+		var welfare = $("input[name=welfare]").val();
+		var status = $("input[name=status]").val();
+		var description = $("input[name=description]").val();
+		//和后台交互
+		var url = baseURL+"/Employment/saveOrUpdate";
+		var data = {
+			title:title,
+			num:num,
+			job:"实习生",
+			businessId:businessId,
+			salary:salary,
+			welfare:welfare,
+			status:status,
+			description:description,
+			workingHours:" ",
+			contactName:" ",
+			contactPhone:" ",
+			auditStatus:"审核通过",
+			contactName:"luxi",
+			contactPhone:"123456789"
+		}
+		$.post(url,data,function(response,status){
+			loadOption();
+			reloadEmployment();
+			alert("save successfully");
+			closeJob_modal();
+		})
+	})
+	// 为修改的save_one按钮绑定事件
+	$("#save_one").on("click",function(){
+		// 获取数据
+		var id = $("input[name=id]").val();
+		var title = $("input[name=title]").val();
+		console.log("title::::",title)
+		var contactName = $("input[name=contactName]").val();
+		var contactPhone = $("input[name=contactPhone]").val();
+		var job= $("input[name=job]").val();
+		var publishTime = $("input[name=publishTime]").val();
+		// var status = $("input[name=status]").val();
+		// 和后台交互
+		var url = baseURL +"/Employment/saveOrUpdate";
+		var data = {
+			id:id,
+			title:title,
+			contactName:contactName,
+			contactPhone:contactPhone,
+			job:job,
+			status:"招聘中"
+			// publishTime:publishTime
+		}
+		$.post(url,data,function(response,result){
+			loadOption();
+			reloadEmployment();
+			alert("修改成功");
+			closeR_modal();
+		})
+	})
+	//封装时间转换函数开始
+	var dateParse=(dataString)=>{
+	  if(dataString){
+	    let date = new Date(dataString);
+	    let Y = date.getFullYear() + '-';
+	    let M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+	    let D = (date.getDate()< 10 ? '0'+date.getDate() : date.getDate())+' ';
+	    let h = (date.getHours()< 10 ? '0'+date.getHours() : date.getHours())+ ':';
+	    let m = (date.getMinutes()< 10 ? '0'+date.getMinutes() : date.getMinutes())+ ':';
+	    let s = (date.getSeconds()< 10 ? '0'+date.getSeconds() : date.getSeconds());
+	    return Y+M+D+h+m+s;
+	  }else{
+	    return '';
+	  }
+	}
+	//封装时间转换函数结束
+
+	//重载数据
+	function reloadEmployment(){
+		//接口地址
+		var url = baseURL+"/Employment/findAll";
+		$.get(url,function(response,status){
+			//清空
+			$("tbody").empty();
+			// loadOption();
+			 response.data.forEach(function(item,index){
+			 	if(item.auditStatus==="审核通过"){
+			 		if(item.status === "招聘中"){
+			 		$(`
+			 			<tr>
+					      <th scope="row">
+					      	<input type="checkbox" value="`+item.id+`"/>
+					      </th>
+					      	<td>`+item.title+`</td>
+					        <td>`+item.contactName+`</td>
+					        <td>`+item.contactPhone+`</td>
+					        <td>`+item.job+`</td>
+					        <td>`+dateParse(item.publishTime)+`</td>
+					        <td><a href="#" class="dec">详情</a></td>
+					        <td>
+							<a class="btn_del" href="javascript:void(0)">
+								<span class="btn_del fa fa-trash text-danger"></span>
+							</a>
+							<a class="btn_upd" href="javascript:void(0)">
+								<span class="btn_upd fa fa-edit text-primary ml-3"></span>
+							</a>
+						    </td>
+					    </tr>`).appendTo($("#employmenting_tbl"));
+			 		} else {
+			 		$(`
+		 			<tr>
+				      	<th scope="row">
+				      	 <input type="checkbox" value="`+item.id+`"/>
+				      	</th>
+				      	<td>`+item.title+`</td>
+				        <td>`+item.contactName+`</td>
+				        <td>`+item.contactPhone+`</td>
+				        <td>`+item.job+`</td>
+				        <td>`+dateParse(item.publishTime)+`</td>
+				        <td><a href="#" class="dec">详情</a></td>
+				        <td>
+						 <a class="btn_del" href="javascript:void(0)">
+						  <span class="btn_del fa fa-trash text-danger"></span>
+						 </a>
+						 <a class="btn_upd" href="javascript:void(0)">
+						  <span class="btn_upd fa fa-edit text-primary ml-3"></span>
+						 </a>
+					    </td>
+				    </tr>`).appendTo($("#employmented_tbl"));
+			 		}
+			 	}
+			 })
+		})
+	}
+	reloadEmployment();
+	function loadOption(){
+		$.get(baseURL+"/Jobs/findAll",function(response,result){
+			response.data.forEach(function(item,index){
+				$(`<option value=`+item.id+`>`+item.status+`</option>`).appendTo($("#three"));
+			})
+		})
+		$.get(baseURL+"/Jobs/findAll",function(response,result){
+			response.data.forEach(function(item,index){
+				$(`<option value=`+item.id+`>`+item.status+`</option>`).appendTo($("#job"));
+			})
+		})
+		$.get(baseURL+"/Business/findAll",function(response,result){
+			response.data.forEach(function(item,index){
+				$(`<option value=`+item.id+`>`+item.name+`</option>`).appendTo($("#four"));
+			})
+		})
+	}
+	loadOption();
+	
+	//为按job查询按钮绑定事件
+	$("#search_job").on("click",function(){
+		// alert(1);
+		var job = $("input[name=job]").val();
+		console.log("job111",job);
+		//后台交互
+		var url = baseURL+"/Employment/findAll";
+		var data = [];
+		$.get(url,data,function(response,status){
+			arr=response.data.filter(function(item){
+				if(item.job===job){
+					return item;
+				}
+			});
+			$("tbody").empty();
+			arr.forEach(function(item){
+				var newTr = $(`
+					<tr>
+				      <th scope="row">
+				      	<input type="checkbox" value="`+item.id+`"/>
+				      </th>
+				      	<td>`+item.title+`</td>
+				        <td>`+item.contactName+`</td>
+				        <td>`+item.contactPhone+`</td>
+				        <td>`+item.job+`</td>
+				        <td>`+dateParse(item.publishTime)+`</td>
+				        <td><a href="#" class="dec">详情</a></td>
+				        <td>
+						<a class="btn_del" href="javascript:void(0)">
+							<span class="btn_del fa fa-trash text-danger"></span>
+						</a>
+						<a class="btn_upd" href="javascript:void(0)">
+							<span class="btn_upd fa fa-edit text-primary ml-3"></span>
+						</a>
+					    </td>
+				    </tr>`);
+			    $("tbody").append(newTr)
+			})
+		})
+	})
+	//为查询返回按钮绑定事件
+	$("#search_back").on("click",function(){
+		reloadEmployment();
+	})
+	//修改和删除
+	$("#employmenting_tbl,#employmented_tbl").on("click","a",function(){
+		// alert(1);
+		switch(this.className){
+			case "btn_del":
+			// alert(1);
+			//获取要删除的id
+			var id = $(this).parents("tr").children().find("input").val();
+			console.log("deletedid",id);
+			//和后台交互
+			var url = baseURL+"/Employment/deleteById";
+			var data = {
+				id:id
+			}
+			$.post(url,data,function(result){
+				if(result.status===200){
+					alert("deleted successfully");
+					reloadEmployment();
+				} else {
+					alert(result.message);
+				}
+			})
+			break;
+			case "btn_upd":
+			// alert(2);
+			$("#revise_job_modal").modal("show");
+			//获取数据
+			var id = $(this).parents("tr").children().eq(0).find("input").val();
+			console.log("id获取",id);
+			var title = $(this).parents("tr").children().eq(1).text();
+			console.log("title",title);
+			var contactName = $(this).parents("tr").children().eq(2).text();
+			console.log("contactName",contactName);
+			var contactPhone = $(this).parents("tr").children().eq(3).text();
+			console.log("contactPhone",contactPhone);
+			var job = $(this).parents("tr").children().eq(4).text();
+			console.log("job",job);
+			var publishTime = $(this).parents("tr").children().eq(5).text();
+			console.log("publishTime",publishTime);
+			//设置值
+			$("#revise_job_form input[name=id]").val(id);
+			console.log("id设置",id);
+			$("#revise_job_form input[name=title]").val(title);
+			console.log("title设置",title);
+			$("#revise_job_form input[name=contactName]").val(contactName);
+			console.log("contactName设置",contactName);
+			$("#revise_job_form input[name=contactPhone]").val(contactPhone);
+			console.log("contactPhone设置",contactPhone);
+			$("#revise_job_form input[name=job]").val(job);
+			console.log("job",job);
+			$("#revise_job_form input[name=publishTime]").val(publishTime);
+			console.log("publishTime",publishTime);
+			// $("#revise_job_form input[name=status]").val(status);
+			// console.log("status",status);
+			break;
+		}
+	})
+})
+function closeJob_modal(){
+	$("#put_job_modal").modal("hide");
+}
+function closeR_modal(){
+	$("#revise_job_modal").modal("hide");
+}
+</script>
+<style>
+	.layui-tab-content{
+		padding: 0px;
+	}
+	#put_job_modal,#revise_job_modal{
+		margin-top: 40px;
+	}
+	.modal-backdrop.show{
+		z-index: -1;
+	}
+	.form-group{
+		padding-left:0px; 
+	}
+	label{
+		line-height: 38px;
+	}
+	thead{
+		background-color: #1d2b36;
+		color: #fff;
+	}
+	#btn_attach{
+		float: right;
+		margin-right: 10px;
+		margin-top: 70px;
+	}
+	table{
+		text-align: center;
+	}
+</style>
